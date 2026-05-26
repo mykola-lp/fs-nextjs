@@ -64,3 +64,15 @@ export const getBlogById = (
     (blog) => blog.id === id
   )
 }
+
+export const incrementBlogLikes = (id: number) => {
+  const blog = blogs.find((blog) => blog.id === id)
+
+  if (!blog) {
+    throw new Error("Blog not found")
+  }
+
+  blog.likes += 1
+
+  return blog
+}

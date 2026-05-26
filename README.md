@@ -38,3 +38,7 @@ Add the route /blogs/new with a form for creating a new blog. The form should ha
 ### Exercise 3: Blog page
 
 Add an individual page for each blog at the route /blogs/[id]. The page should display the blog's title, author, url, and likes. Use a dynamic route segment following the Next.js App Router convention.
+
+### Exercise 4: Like button
+
+Add a button on the individual blog page that increments the blog's likes by one. Implement this using a Server Action with a hidden form field to pass the blog id. Make sure the like count is correctly updated both in development and in production mode.
