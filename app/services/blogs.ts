@@ -56,3 +56,11 @@ export const addBlog = (
     likes,
   })
 }
+
+export const getBlogById = (
+  id: number
+) => {
+  return blogs.find(
+    (blog) => blog.id === id
+  )
+}
