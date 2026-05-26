@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { getBlogsSortedByLikes } from "../services/blogs"
+import { getVisibleBlogs } from "../services/blogs"
 
 // import BlogList from "./BlogList"
 
@@ -12,21 +12,47 @@ const getSortOrder = (
     : "desc"
 }
 
+const getFilterValue = (
+  filter: string | string[] | undefined
+) => {
+  return typeof filter === "string"
+    ? filter
+    : ""
+}
+
 const Blogs = async (props: PageProps<"/blogs">) => {
-  const { sort } = await props.searchParams
+  const { sort, filter } = await props.searchParams
 
   const sortOrder = getSortOrder(sort)
-  const blogs = getBlogsSortedByLikes(sortOrder)
+  const filterValue = getFilterValue(filter)
+  const blogs = getVisibleBlogs(filterValue, sortOrder)
 
   return (
     <div>
       <h2>Blogs</h2>
 
+      <form action="/blogs">
+        <input type="text" name="filter" defaultValue={filterValue} />
+
+        <input
+          type="hidden"
+          name="sort"
+          value={sortOrder === "asc" ? "likes-asc" : "likes-desc"}
+        />
+      
+        <button type="submit">Search</button>
+      </form>
+
       <p>
         Sort by likes:{" "}
-        <Link href="/blogs?sort=likes-desc">Most liked first</Link>{" "}
+
+        <Link href={`/blogs?sort=likes-desc&filter=${encodeURIComponent(filterValue)}`}>
+          Most liked first
+        </Link>{" "}
         |{" "}
-        <Link href="/blogs?sort=likes-asc">Least liked first</Link>
+        <Link href={`/blogs?sort=likes-asc&filter=${encodeURIComponent(filterValue)}`}>
+          Least liked first
+        </Link>
       </p>
 
       {/*
