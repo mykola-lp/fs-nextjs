@@ -38,8 +38,20 @@ const blogs = [
 
 let nextId = 6
 
+type BlogSortOrder = "asc" | "desc"
+
 export const getBlogs = () => {
   return blogs
+}
+
+export const getBlogsSortedByLikes = (
+  order: BlogSortOrder = "desc"
+) => {
+  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
+
+  return order === "asc"
+    ? sortedBlogs.reverse()
+    : sortedBlogs
 }
 
 export const addBlog = (
