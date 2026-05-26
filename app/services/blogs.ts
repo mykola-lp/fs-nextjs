@@ -88,3 +88,20 @@ export const incrementBlogLikes = (id: number) => {
 
   return blog
 }
+
+export const getVisibleBlogs = (
+  filter: string,
+  order: BlogSortOrder = "desc"
+) => {
+  const sortedBlogs = getBlogsSortedByLikes(order)
+
+  if (!filter) {
+    return sortedBlogs
+  }
+
+  const normalizedFilter = filter.toLowerCase()
+
+  return sortedBlogs.filter((blog) =>
+    blog.title.toLowerCase().includes(normalizedFilter)
+  )
+}

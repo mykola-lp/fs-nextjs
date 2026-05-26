@@ -46,3 +46,7 @@ Add a button on the individual blog page that increments the blog's likes by one
 ### Exercise 5: Rendered in order ("use client" and server)
 
 Change the blogs list at /blogs so that blogs are rendered in descending order by the number of likes, with the most liked blog shown first.
+
+### Exercise 6: Search
+
+Add a search feature to the blogs list that allows the user to filter blogs by title. Implement the feature using URL search parameters and a Server Component, following the same pattern used in the notes app. The search term should be reflected in the URL (e.g. /blogs?filter=next) so that the filtered view can be bookmarked and shared. Add a text input and a search button to the page. Submitting the form should update the URL and re-render the list with only the matching blogs.
