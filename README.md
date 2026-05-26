@@ -42,3 +42,7 @@ Add an individual page for each blog at the route /blogs/[id]. The page should d
 ### Exercise 4: Like button
 
 Add a button on the individual blog page that increments the blog's likes by one. Implement this using a Server Action with a hidden form field to pass the blog id. Make sure the like count is correctly updated both in development and in production mode.
+
+### Exercise 5: Rendered in order ("use client")
+
+Change the blogs list at /blogs so that blogs are rendered in descending order by the number of likes, with the most liked blog shown first.
