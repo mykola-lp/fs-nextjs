@@ -34,3 +34,7 @@ Create a new Next.js application. Set up a navigation bar with links to a home p
 ### Exercise 2: New blog
 
 Add the route /blogs/new with a form for creating a new blog. The form should have fields for title, author, and url. Implement a Server Action that handles the form submission and adds the new blog to the list. After submission, redirect the user back to /blogs. Make sure the new blog appears in the list after creation both in development and in production mode.
+
+### Exercise 3: Blog page
+
+Add an individual page for each blog at the route /blogs/[id]. The page should display the blog's title, author, url, and likes. Use a dynamic route segment following the Next.js App Router convention.
