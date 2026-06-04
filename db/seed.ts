@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
-import { blogs } from "./schema";
+import { blogs, notes } from "./schema";
 
 dotenv.config({ path: ".env.local" });
 
@@ -39,6 +39,25 @@ const initialBlogs: typeof blogs.$inferInsert[] = [
   },
 ];
 
+const initialNotes: typeof notes.$inferInsert[] = [
+  {
+    content: "Learn Drizzle ORM",
+    important: true,
+  },
+  {
+    content: "Build Next.js API routes",
+    important: false,
+  },
+  {
+    content: "Deploy app to Vercel",
+    important: true,
+  },
+  {
+    content: "Read database docs",
+    important: false,
+  },
+];
+
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
@@ -48,13 +67,25 @@ if (!connectionString) {
 const client = postgres(connectionString);
 const db = drizzle(client);
 
-async function seed(): Promise<void> {
+async function seedBlogs(): Promise<void> {
   await db.delete(blogs);
   await db.insert(blogs).values(initialBlogs);
 
-  await client.end();
-
   console.log("Blogs seeded");
+}
+
+async function seedNotes(): Promise<void> {
+  await db.delete(notes);
+  await db.insert(notes).values(initialNotes);
+
+  console.log("Notes seeded");
+}
+
+async function seed(): Promise<void> {
+  await seedBlogs();
+  await seedNotes();
+
+  await client.end();
 }
 
 seed().catch(console.error);
