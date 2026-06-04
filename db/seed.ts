@@ -6,38 +6,14 @@ import { blogs, notes, users } from "./schema";
 
 dotenv.config({ path: ".env.local" });
 
-const initialBlogs: typeof blogs.$inferInsert[] = [
-  {
-    title: "Understanding React Server Components",
-    author: "Dan Abramov",
-    url: "https://react.dev",
-    likes: 12,
-  },
-  {
-    title: "Why Next.js App Router Matters",
-    author: "Lee Robinson",
-    url: "https://nextjs.org",
-    likes: 25,
-  },
-  {
-    title: "Fullstack Development with Next.js",
-    author: "Matti Luukkainen",
-    url: "https://fullstackopen.com",
-    likes: 18,
-  },
-  {
-    title: "Modern JavaScript Patterns",
-    author: "Addy Osmani",
-    url: "https://addyosmani.com",
-    likes: 30,
-  },
-  {
-    title: "Introduction to TypeScript",
-    author: "Anders Hejlsberg",
-    url: "https://www.typescriptlang.org",
-    likes: 21,
-  },
-];
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL is missing");
+}
+
+const client = postgres(connectionString);
+const db = drizzle(client);
 
 const initialUsers: typeof users.$inferInsert[] = [
   {
@@ -50,23 +26,9 @@ const initialUsers: typeof users.$inferInsert[] = [
   },
 ];
 
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL is missing");
-}
-
-const client = postgres(connectionString);
-const db = drizzle(client);
-
-async function seedBlogs(): Promise<void> {
-  await db.delete(blogs);
-  await db.insert(blogs).values(initialBlogs);
-
-  console.log("Blogs seeded");
-}
-
 async function seedUsers(): Promise<number[]> {
+  await db.delete(notes);
+  await db.delete(blogs);
   await db.delete(users);
 
   const insertedUsers = await db
@@ -79,9 +41,51 @@ async function seedUsers(): Promise<number[]> {
   return insertedUsers.map((user) => user.id);
 }
 
-async function seedNotes(userIds: number[]): Promise<void> {
-  await db.delete(notes);
+async function seedBlogs(userIds: number[]): Promise<void> {
+  const initialBlogs: typeof blogs.$inferInsert[] = [
+    {
+      title: "Understanding React Server Components",
+      author: "Dan Abramov",
+      url: "https://react.dev",
+      likes: 12,
+      userId: userIds[0],
+    },
+    {
+      title: "Why Next.js App Router Matters",
+      author: "Lee Robinson",
+      url: "https://nextjs.org",
+      likes: 25,
+      userId: userIds[0],
+    },
+    {
+      title: "Fullstack Development with Next.js",
+      author: "Matti Luukkainen",
+      url: "https://fullstackopen.com",
+      likes: 18,
+      userId: userIds[1],
+    },
+    {
+      title: "Modern JavaScript Patterns",
+      author: "Addy Osmani",
+      url: "https://addyosmani.com",
+      likes: 30,
+      userId: userIds[1],
+    },
+    {
+      title: "Introduction to TypeScript",
+      author: "Anders Hejlsberg",
+      url: "https://www.typescriptlang.org",
+      likes: 21,
+      userId: userIds[0],
+    },
+  ];
 
+  await db.insert(blogs).values(initialBlogs);
+
+  console.log("Blogs seeded");
+}
+
+async function seedNotes(userIds: number[]): Promise<void> {
   const initialNotes: typeof notes.$inferInsert[] = [
     {
       content: "Learn Drizzle ORM",
@@ -111,11 +115,14 @@ async function seedNotes(userIds: number[]): Promise<void> {
 }
 
 async function seed(): Promise<void> {
-  await seedBlogs();
   const userIds = await seedUsers();
+
+  await seedBlogs(userIds);
   await seedNotes(userIds);
 
   await client.end();
+
+  console.log("Seed completed");
 }
 
 seed().catch(console.error);
