@@ -126,3 +126,12 @@ async function seed(): Promise<void> {
 }
 
 seed().catch(console.error);
+
+// DROP TABLE IF EXISTS drizzle.__drizzle_migrations CASCADE;
+// DROP TABLE IF EXISTS notes CASCADE;
+// DROP TABLE IF EXISTS users CASCADE;
+
+// npx drizzle-kit drop
+
+// npx drizzle-kit generate
+// npx drizzle-kit migrate
