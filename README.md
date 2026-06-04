@@ -60,3 +60,9 @@ Deploy your blog application to Vercel. Push the code to a GitHub repository, co
 Replace the hardcoded in-memory blog list with a PostgreSQL database. Create a Vercel Postgres (Neon) database, configure the DATABASE_URL in a local .env.local file (and add .env.local to .gitignore).
 
 Install Drizzle ORM and set up the schema, database connection, and Drizzle config files following the same pattern used in the notes app. Define a blogs table with columns for id, title, author, url, and likes. Generate and apply the migration. Update the service functions to use the database instead of the in-memory array. Verify that creating a new blog works correctly both locally and on Vercel.
+
+### Exercise 9: Users
+
+Add a users table to the blog app database with columns for id, username and name. Add a foreign key column userId to the blogs table referencing the users table. Generate and apply the migration. Create a page at /users that lists all users. Each user's name should link to their individual user page. Add a link to the users page in the navigation bar.
+
+Create a user directly in Drizzle Studio, and associate the existing blogs with that user by setting their userId to the new user's id.
