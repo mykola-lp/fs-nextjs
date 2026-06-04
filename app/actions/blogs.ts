@@ -10,13 +10,15 @@ export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string
   const author = formData.get("author") as string
   const url = formData.get("url") as string
-  const likes = parseInt(formData.get("likes") as string)
+  const likes = Number(formData.get("likes"))
+  const userId = Number(formData.get("userId"))
 
   await addBlog(
     title,
     author,
     url,
-    likes
+    likes,
+    userId
   )
 
   revalidatePath("/blogs")
