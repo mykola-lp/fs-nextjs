@@ -13,3 +13,9 @@ export const notes = pgTable("notes", {
   content: text("content").notNull(),
   important: boolean("important").notNull().default(false),
 })
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  name: text("name").notNull(),
+})
