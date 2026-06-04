@@ -25,7 +25,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
 
   const sortOrder = getSortOrder(sort)
   const filterValue = getFilterValue(filter)
-  const blogs = getVisibleBlogs(filterValue, sortOrder)
+  const blogs = await getVisibleBlogs(filterValue, sortOrder)
 
   return (
     <div>
