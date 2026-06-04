@@ -1,17 +1,15 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-import { getUserByUsername, getBlogsByUserId } from "../../services/users"
+import { getUserWithBlogsByUsername } from "../../services/users"
 
 const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = await params
-  const user = await getUserByUsername(username)
+  const user = await getUserWithBlogsByUsername(username)
 
   if (!user) {
     notFound()
   }
-
-  const blogs = await getBlogsByUserId(user.id)
 
   return (
     <div>
@@ -21,7 +19,7 @@ const UserPage = async ({ params }: { params: Promise<{ username: string }> }) =
       <h3>Blogs</h3>
 
       <ul>
-        {blogs.map((blog) => (
+        {user.blogs.map((blog) => (
           <li key={blog.id}>
             <Link href={`/blogs/${blog.id}`}>
               {blog.title}
