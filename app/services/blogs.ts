@@ -1,67 +1,29 @@
-const blogs = [
-  {
-    id: 1,
-    title: "Understanding React Server Components",
-    author: "Dan Abramov",
-    url: "https://react.dev",
-    likes: 12,
-  },
-  {
-    id: 2,
-    title: "Why Next.js App Router Matters",
-    author: "Lee Robinson",
-    url: "https://nextjs.org",
-    likes: 25,
-  },
-  {
-    id: 3,
-    title: "Fullstack Development with Next.js",
-    author: "Matti Luukkainen",
-    url: "https://fullstackopen.com",
-    likes: 18,
-  },
-  {
-    id: 4,
-    title: "Modern JavaScript Patterns",
-    author: "Addy Osmani",
-    url: "https://addyosmani.com",
-    likes: 30,
-  },
-  {
-    id: 5,
-    title: "Introduction to TypeScript",
-    author: "Anders Hejlsberg",
-    url: "https://www.typescriptlang.org",
-    likes: 21,
-  },
-]
+import { eq, ilike, desc, asc } from "drizzle-orm"
 
-let nextId = 6
+import { db } from "../../db"
+import { blogs } from "../../db/schema"
 
 type BlogSortOrder = "asc" | "desc"
 
-export const getBlogs = () => {
-  return blogs
+export const getBlogs = async () => {
+  return db.query.blogs.findMany()
 }
 
-export const getBlogsSortedByLikes = (
+export const getBlogsSortedByLikes = async (
   order: BlogSortOrder = "desc"
 ) => {
-  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
-
-  return order === "asc"
-    ? sortedBlogs.reverse()
-    : sortedBlogs
+  return db.query.blogs.findMany({
+    orderBy: order === "asc" ? asc(blogs.likes) : desc(blogs.likes),
+  })
 }
 
-export const addBlog = (
+export const addBlog = async (
   title: string,
   author: string,
   url: string,
   likes: number
 ) => {
-  blogs.push({
-    id: nextId++,
+  await db.insert(blogs).values({
     title,
     author,
     url,
@@ -69,39 +31,43 @@ export const addBlog = (
   })
 }
 
-export const getBlogById = (
+export const getBlogById = async (
   id: number
 ) => {
-  return blogs.find(
-    (blog) => blog.id === id
-  )
+  return db.query.blogs.findFirst({
+    where: eq(blogs.id, id),
+  })
 }
 
-export const incrementBlogLikes = (id: number) => {
-  const blog = blogs.find((blog) => blog.id === id)
+export const incrementBlogLikes = async (
+  id: number
+) => {
+  const blog = await getBlogById(id)
 
   if (!blog) {
     throw new Error("Blog not found")
   }
 
-  blog.likes += 1
+  await db
+    .update(blogs)
+    .set({ likes: blog.likes + 1 })
+    .where(eq(blogs.id, id))
 
-  return blog
+  return { ...blog, likes: blog.likes + 1 }
 }
 
-export const getVisibleBlogs = (
+export const getVisibleBlogs = async (
   filter: string,
   order: BlogSortOrder = "desc"
 ) => {
-  const sortedBlogs = getBlogsSortedByLikes(order)
+  const normalizedFilter = filter.trim().toLowerCase()
 
-  if (!filter) {
-    return sortedBlogs
+  if (!normalizedFilter) {
+    return getBlogsSortedByLikes(order)
   }
 
-  const normalizedFilter = filter.toLowerCase()
-
-  return sortedBlogs.filter((blog) =>
-    blog.title.toLowerCase().includes(normalizedFilter)
-  )
+  return db.query.blogs.findMany({
+    where: ilike(blogs.title, `%${normalizedFilter}%`),
+    orderBy: order === "asc" ? asc(blogs.likes) : desc(blogs.likes),
+  })
 }
