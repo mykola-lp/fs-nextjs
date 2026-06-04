@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
-import { blogs, notes } from "./schema";
+import { blogs, notes, users } from "./schema";
 
 dotenv.config({ path: ".env.local" });
 
@@ -39,22 +39,14 @@ const initialBlogs: typeof blogs.$inferInsert[] = [
   },
 ];
 
-const initialNotes: typeof notes.$inferInsert[] = [
+const initialUsers: typeof users.$inferInsert[] = [
   {
-    content: "Learn Drizzle ORM",
-    important: true,
+    username: "john123",
+    name: "John Doe",
   },
   {
-    content: "Build Next.js API routes",
-    important: false,
-  },
-  {
-    content: "Deploy app to Vercel",
-    important: true,
-  },
-  {
-    content: "Read database docs",
-    important: false,
+    username: "alice456",
+    name: "Alice Smith",
   },
 ];
 
@@ -74,8 +66,45 @@ async function seedBlogs(): Promise<void> {
   console.log("Blogs seeded");
 }
 
-async function seedNotes(): Promise<void> {
+async function seedUsers(): Promise<number[]> {
+  await db.delete(users);
+
+  const insertedUsers = await db
+    .insert(users)
+    .values(initialUsers)
+    .returning({ id: users.id });
+
+  console.log("Users seeded");
+
+  return insertedUsers.map((user) => user.id);
+}
+
+async function seedNotes(userIds: number[]): Promise<void> {
   await db.delete(notes);
+
+  const initialNotes: typeof notes.$inferInsert[] = [
+    {
+      content: "Learn Drizzle ORM",
+      important: true,
+      userId: userIds[0],
+    },
+    {
+      content: "Build Next.js API routes",
+      important: false,
+      userId: userIds[0],
+    },
+    {
+      content: "Deploy app to Vercel",
+      important: true,
+      userId: userIds[1],
+    },
+    {
+      content: "Read database docs",
+      important: false,
+      userId: userIds[1],
+    },
+  ];
+
   await db.insert(notes).values(initialNotes);
 
   console.log("Notes seeded");
@@ -83,7 +112,8 @@ async function seedNotes(): Promise<void> {
 
 async function seed(): Promise<void> {
   await seedBlogs();
-  await seedNotes();
+  const userIds = await seedUsers();
+  await seedNotes(userIds);
 
   await client.end();
 }
