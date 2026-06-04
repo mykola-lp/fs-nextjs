@@ -56,3 +56,6 @@ Add a search feature to the blogs list that allows the user to filter blogs by t
 Replace the hardcoded in-memory blog list with a PostgreSQL database. Create a Vercel Postgres (Neon) database, configure the DATABASE_URL in a local .env.local file (and add .env.local to .gitignore).
 
 Install Drizzle ORM and set up the schema, database connection, and Drizzle config files following the same pattern used in the notes app. Define a blogs table with columns for id, title, author, url, and likes. Generate and apply the migration. Update the service functions to use the database instead of the in-memory array. Verify that creating a new blog works correctly both locally and on Vercel.
+### Exercise 7: Deploy to Vercel
+
+Deploy your blog application to Vercel. Push the code to a GitHub repository, connect it to Vercel, and verify that the app works at the public URL Vercel provides. You will notice that creating new blogs does not work reliably in production, since the in-memory array is not shared across serverless function instances. This is expected and will be fixed in the next exercise.
