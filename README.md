@@ -66,3 +66,11 @@ Install Drizzle ORM and set up the schema, database connection, and Drizzle conf
 Add a users table to the blog app database with columns for id, username and name. Add a foreign key column userId to the blogs table referencing the users table. Generate and apply the migration. Create a page at /users that lists all users. Each user's name should link to their individual user page. Add a link to the users page in the navigation bar.
 
 Create a user directly in Drizzle Studio, and associate the existing blogs with that user by setting their userId to the new user's id.
+
+### Exercise 10: Users page
+
+Create an individual page for each user at /users/[username]. The page should display the user's name and a list of the blogs they have added.
+
+Note that the URL of a user page must be based on the username, not the numeric id, for example /users/mluukkai.
+
+Use a single Drizzle join query instead of two separate queries. Define the relations between the users and blogs tables in db/schema.ts using the relations function from drizzle-orm, then use the with option in db.query.users.findFirst to fetch the user and their blogs in one go.
