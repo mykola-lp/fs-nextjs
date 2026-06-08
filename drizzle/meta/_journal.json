@@ -43,6 +43,13 @@
       "when": 1780588507673,
       "tag": "0005_silky_warbird",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780915335750,
+      "tag": "0006_harsh_silvermane",
+      "breakpoints": true
     }
   ]
 }
