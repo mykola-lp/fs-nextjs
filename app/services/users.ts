@@ -1,7 +1,5 @@
 import { eq } from "drizzle-orm"
 
-import bcrypt from "bcryptjs"
-
 import { db } from "@/db"
 import { users } from "@/db/schema"
 
@@ -21,18 +19,13 @@ export const getUserWithBlogsByUsername = async (username: string) => {
 export const createUser = async ({
   username,
   name,
-  password,
+  passwordHash,
 }: {
   username: string
   name: string
-  password: string
+  passwordHash: string
 }) => {
-  const passwordHash = await bcrypt.hash(
-    password,
-    10,
-  )
-
-  await db.insert(users).values({
+  return db.insert(users).values({
     username,
     name,
     passwordHash,

@@ -3,8 +3,7 @@
 import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 
-import { db } from "@/db"
-import { users } from "@/db/schema"
+import { createUser } from "@/app/services/users"
 
 import type { RegisterState } from "./users.types"
 
@@ -19,7 +18,7 @@ export async function registerUser(
   try {
     const passwordHash = await bcrypt.hash(password, 10)
 
-    await db.insert(users).values({
+    await createUser({
       username,
       name,
       passwordHash,
