@@ -50,6 +50,13 @@
       "when": 1780915335750,
       "tag": "0006_harsh_silvermane",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1780921789400,
+      "tag": "0007_silky_post",
+      "breakpoints": true
     }
   ]
 }
