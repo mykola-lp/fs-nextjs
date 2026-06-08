@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
+import bcrypt from "bcryptjs"
+
 import { blogs, notes, users } from "./schema";
 
 dotenv.config({ path: ".env.local" });
@@ -15,16 +17,18 @@ if (!connectionString) {
 const client = postgres(connectionString);
 const db = drizzle(client);
 
-const initialUsers: typeof users.$inferInsert[] = [
+const initialUsers = [
   {
     username: "john123",
     name: "John Doe",
+    passwordHash: await bcrypt.hash("john123", 10),
   },
   {
     username: "alice456",
     name: "Alice Smith",
+    passwordHash: await bcrypt.hash("alice456", 10),
   },
-];
+]
 
 async function seedUsers(): Promise<number[]> {
   await db.delete(notes);
