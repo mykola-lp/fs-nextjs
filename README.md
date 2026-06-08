@@ -78,3 +78,7 @@ Use a single Drizzle join query instead of two separate queries. Define the rela
 ### Exercise 11: Login
 
 Add login support to the blog app using NextAuth.js and bcryptjs. Remember to add a passwordHash column to the users table!
+
+### Exercise 12: Registration
+
+Add a registration page to the blog app at /register. Create a Server Action registerUser that reads username, name, and password from the form, hashes the password with bcrypt.hash, inserts the new user into the database, and redirects to /login. Add a link to the registration page in the navigation bar for unauthenticated users.
