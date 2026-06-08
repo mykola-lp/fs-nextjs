@@ -1,27 +1,21 @@
-import Link from "next/link"
+import { auth } from "@/auth"
+import AuthSessionProvider from "./components/SessionProvider"
+import NavBar from "./components/NavBar"
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await auth()
+
   return (
     <html lang="en">
       <body>
-        <nav>
-          <Link href="/">home</Link>
-          {" | "}
-          <Link href="/notes">notes</Link>
-          {" | "}
-          <Link href="/blogs">blogs</Link>
-          {" | "}
-          <Link href="/users">users</Link>
-          {" | "}
-          <Link href="/blogs/new">create new</Link>
-          {" | "}
-          <Link href="/register">register</Link>
-        </nav>
-        {children}
+        <AuthSessionProvider session={session}>
+          <NavBar />
+          {children}
+        </AuthSessionProvider>
       </body>
     </html>
   )
