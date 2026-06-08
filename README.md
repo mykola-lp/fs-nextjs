@@ -74,3 +74,7 @@ Create an individual page for each user at /users/[username]. The page should di
 Note that the URL of a user page must be based on the username, not the numeric id, for example /users/mluukkai.
 
 Use a single Drizzle join query instead of two separate queries. Define the relations between the users and blogs tables in db/schema.ts using the relations function from drizzle-orm, then use the with option in db.query.users.findFirst to fetch the user and their blogs in one go.
+
+### Exercise 11: Login
+
+Add login support to the blog app using NextAuth.js and bcryptjs. Remember to add a passwordHash column to the users table!
