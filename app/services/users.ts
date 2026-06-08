@@ -1,7 +1,9 @@
 import { eq } from "drizzle-orm"
 
-import { db } from "../../db"
-import { users } from "../../db/schema"
+import bcrypt from "bcryptjs"
+
+import { db } from "@/db"
+import { users } from "@/db/schema"
 
 export const getUsers = async () => {
   return db.query.users.findMany()
@@ -13,5 +15,26 @@ export const getUserWithBlogsByUsername = async (username: string) => {
     with: {
       blogs: true,
     },
+  })
+}
+
+export const createUser = async ({
+  username,
+  name,
+  password,
+}: {
+  username: string
+  name: string
+  password: string
+}) => {
+  const passwordHash = await bcrypt.hash(
+    password,
+    10,
+  )
+
+  await db.insert(users).values({
+    username,
+    name,
+    passwordHash,
   })
 }
