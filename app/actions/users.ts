@@ -1,25 +1,32 @@
 "use server"
 
+import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 
-import { createUser } from "@/app/services/users"
+import { db } from "@/db"
+import { users } from "@/db/schema"
+
+import type { RegisterState } from "./users.types"
 
 export async function registerUser(
+  _prevState: RegisterState,
   formData: FormData,
-) {
+): Promise<RegisterState | never> {
   const username = formData.get("username") as string
   const name = formData.get("name") as string
   const password = formData.get("password") as string
 
   try {
-    await createUser({
+    const passwordHash = await bcrypt.hash(password, 10)
+
+    await db.insert(users).values({
       username,
       name,
-      password,
+      passwordHash,
     })
   } catch {
     return {
-      error: "Registration failed",
+      error: "Username already exists or registration failed",
     }
   }
 
