@@ -7,6 +7,7 @@ import { addNote, toggleImportance } from "../services/notes"
 import { getCurrentUser } from "../services/session"
 
 export const createNote = async (
+  prevState: { error: string },
   formData: FormData
 ) => {
   const user = await getCurrentUser()
@@ -16,6 +17,11 @@ export const createNote = async (
   }
 
   const content = formData.get("content") as string
+
+  if (!content || content.length < 10) {
+    return { error: "Note content must be at least 10 characters long" }
+  }
+
   const important = formData.get("important") === "on"
 
   await addNote(
