@@ -22,13 +22,15 @@ export default function NavBar() {
           <Link href="/register">register</Link>
           {" | "}
           <Link href="/login">login</Link>
-          {" | "}
         </>
       )}
 
       {session && (
         <>
-          <Link href="/notes/new">create new</Link>
+          {" | "}
+          <Link href="/notes/new">create new (note)</Link>
+          {" | "}
+                    <Link href="/blogs/new">create new (blog post)</Link>
           {" | "}
           <b>{session.user?.name}</b> <em>logged in</em>{" "}
 
