@@ -54,7 +54,7 @@ const NewBlog = () => {
             />
           </label>
         </div>
-
+        
         <button type="submit">Create</button>
       </form>
 
