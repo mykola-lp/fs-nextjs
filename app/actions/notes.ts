@@ -17,12 +17,10 @@ export const createNote = async (
 
   const content = formData.get("content") as string
   const important = formData.get("important") === "on"
-  const userId = Number(formData.get("userId"))
 
   await addNote(
     content,
-    important,
-    userId
+    important
   )
 
   revalidatePath("/notes")

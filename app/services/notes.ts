@@ -22,8 +22,7 @@ export const getNoteById = async (id: number) => {
 
 export const addNote = async (
   content: string,
-  important: boolean,
-  userId: number
+  important: boolean
 ) => {
   const user = await getCurrentUser()
 
@@ -36,7 +35,7 @@ export const addNote = async (
     .values({
       content,
       important,
-      userId
+      userId: user.id
     })
 }
 
