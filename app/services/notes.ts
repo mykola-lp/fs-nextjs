@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm"
-import { db } from "../../db"
-import { notes } from "../../db/schema"
+
+import { db } from "@/db"
+import { notes } from "@/db/schema"
 
 export const getNotes = async (importantOnly: boolean) => {
   if (importantOnly) {
@@ -18,8 +19,18 @@ export const getNoteById = async (id: number) => {
   })
 }
 
-export const addNote = async (content: string, important: boolean, userId: number) => {
-  await db.insert(notes).values({ content, important, userId })
+export const addNote = async (
+  content: string,
+  important: boolean,
+  userId: number
+) => {
+  await db
+    .insert(notes)
+    .values({
+      content,
+      important,
+      userId,
+    })
 }
 
 export const toggleImportance = async (id: number) => {

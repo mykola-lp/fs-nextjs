@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+
 import AuthSessionProvider from "./components/SessionProvider"
 import NavBar from "./components/NavBar"
 
