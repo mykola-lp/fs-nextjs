@@ -5,20 +5,47 @@ import { revalidatePath } from "next/cache"
 
 import { addBlog } from "../services/blogs"
 import { incrementBlogLikes } from "../services/blogs"
+import { getCurrentUser } from "../services/session"
+import type { CreateBlogState } from "./blogs.types"
 
-export const createBlog = async (formData: FormData) => {
+export const createBlog = async (
+  prevState: CreateBlogState,
+  formData: FormData
+) => {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
   const title = formData.get("title") as string
   const author = formData.get("author") as string
   const url = formData.get("url") as string
-  const likes = Number(formData.get("likes"))
-  const userId = Number(formData.get("userId"))
+
+  const values = { title, author, url }
+  const errors: NonNullable<CreateBlogState["errors"]> = {}
+
+  if (!title || title.length < 5) {
+    errors.title = "Blog title must be at least 5 characters long"
+  }
+
+  if (!author || author.length < 5) {
+    errors.author = "Blog author must be at least 5 characters long"
+  }
+
+  if (!url || url.length < 5) {
+    errors.url = "Blog URL must be at least 5 characters long"
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors, values }
+  }
 
   await addBlog(
     title,
     author,
     url,
-    likes,
-    userId
+    user.id
   )
 
   revalidatePath("/blogs")

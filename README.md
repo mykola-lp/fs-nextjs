@@ -82,3 +82,47 @@ Add login support to the blog app using NextAuth.js and bcryptjs. Remember to ad
 ### Exercise 12: Registration
 
 Add a registration page to the blog app at /register. Create a Server Action registerUser that reads username, name, and password from the form, hashes the password with bcrypt.hash, inserts the new user into the database, and redirects to /login. Add a link to the registration page in the navigation bar for unauthenticated users.
+
+### Exercise 13: Validations in blog creation
+
+Add validation to the blog creation form using the useActionState pattern from the notes app.
+
+Apply the following rules:
+
+* title, author and url must be present and all have minimum length of 5 characters
+
+### Exercise 14: Blog creation form on error
+
+Ensure that if there is a validation error when creating a blog, the form input fields (title, author, url) retain their values instead of resetting. The user should not have to retype their input after a failed submission.
+
+Hints:
+
+In case of a validation error, you should return also the previous form values:
+
+```bash
+const title = formData.get("title") as string
+const author = formData.get("author") as string
+const url = formData.get("url") as string
+
+const errors = {}
+// ...
+
+if (Object.keys(errors).length > 0) {
+  return { errors, values: { title, author, url } }
+}
+```
+
+You can use defaultValue in the form to set these values back to the input elements:
+
+```bash
+const [state, formAction] = useActionState(createBlog, initialState)
+
+// ...
+
+<input
+  id="author"
+  name="author"
+  type="text"
+  defaultValue={state.values?.author}
+/>
+```
