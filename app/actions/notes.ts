@@ -2,16 +2,16 @@
 
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
-import { auth } from "@/auth"
 
 import { addNote, toggleImportance } from "../services/notes"
+import { getCurrentUser } from "../services/session"
 
 export const createNote = async (
   formData: FormData
 ) => {
-  const session = await auth()
+  const user = await getCurrentUser()
 
-  if (!session) {
+  if (!user) {
     redirect("/login")
   }
 
@@ -20,7 +20,8 @@ export const createNote = async (
 
   await addNote(
     content,
-    important
+    important,
+    user.id
   )
 
   revalidatePath("/notes")
