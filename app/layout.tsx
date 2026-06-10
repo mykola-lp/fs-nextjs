@@ -6,6 +6,8 @@ import NavBar from "@/app/components/NavBar"
 import { NotificationProvider } from "@/app/components/NotificationContext"
 import Notification from "@/app/components/Notification"
 
+import "@/app/globals.css"
+
 export default async function RootLayout({
   children,
 }: {
@@ -15,7 +17,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-background text-foreground">
         <AuthSessionProvider session={session}>
           <NotificationProvider>
             <NavBar />
