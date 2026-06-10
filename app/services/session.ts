@@ -1,5 +1,6 @@
 import { auth } from "@/auth"
 import { eq } from "drizzle-orm"
+import { redirect } from "next/navigation"
 
 import { db } from "@/db"
 import { users } from "@/db/schema"
@@ -17,4 +18,14 @@ export const getCurrentUser = async () => {
       session.user.email
     ),
   })
+}
+
+export const requireCurrentUser = async () => {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
+  return user
 }

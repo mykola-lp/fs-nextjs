@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-import { getUserWithBlogsByUsername } from "../../services/users"
+import { getUserWithBlogsByUsername } from "@/app/services/users"
 
 const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = await params

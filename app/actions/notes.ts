@@ -1,25 +1,23 @@
 "use server"
 
-import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
-import { addNote, toggleImportance } from "../services/notes"
-import { getCurrentUser } from "../services/session"
+import { addNote, toggleImportance } from "@/app/services/notes"
+import { requireCurrentUser } from "@/app/services/session"
 
 export const createNote = async (
   prevState: { error: string },
   formData: FormData
 ) => {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login")
-  }
+  const user = await requireCurrentUser()
 
   const content = formData.get("content") as string
 
   if (!content || content.length < 10) {
-    return { error: "Note content must be at least 10 characters long" }
+    return {
+      error: "Note content must be at least 10 characters long",
+      success: false,
+    }
   }
 
   const important = formData.get("important") === "on"
@@ -31,7 +29,8 @@ export const createNote = async (
   )
 
   revalidatePath("/notes")
-  redirect("/notes")
+
+  return { error: "", success: true }
 }
 
 export const toggleNoteImportance = async (formData: FormData) => {

@@ -1,36 +1,11 @@
-"use client"
+import { requireCurrentUser } from "@/app/services/session"
 
-import { useActionState } from "react"
-import { createNote } from "../../actions/notes"
+import NewNoteForm from "./NewNoteForm"
 
-const NewNote = () => {
-  const [state, formAction] = useActionState(createNote, { error: "" })
+const NewNotePage = async () => {
+  await requireCurrentUser()
 
-  return (
-    <div>
-      <h2>Create a new note</h2>
-
-      <form action={formAction}>
-        <div>
-          <label>
-            Content
-            <input type="text" name="content" required minLength={10} />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input type="checkbox" name="important" />
-            Important
-          </label>
-        </div>
-        
-        <button type="submit">Create</button>
-      </form>
-
-      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
-    </div>
-  )
+  return <NewNoteForm />
 }
 
-export default NewNote
+export default NewNotePage

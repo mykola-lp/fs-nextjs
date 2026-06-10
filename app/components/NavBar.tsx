@@ -30,7 +30,7 @@ export default function NavBar() {
           {" | "}
           <Link href="/notes/new">create new (note)</Link>
           {" | "}
-                    <Link href="/blogs/new">create new (blog post)</Link>
+          <Link href="/blogs/new">create new (blog post)</Link>
           {" | "}
           <b>{session.user?.name}</b> <em>logged in</em>{" "}
 
