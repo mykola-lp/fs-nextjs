@@ -3,40 +3,47 @@
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
 
+import NavLink from "./NavLink"
+
 export default function NavBar() {
   const { data: session } = useSession()
 
   return (
-    <nav>
-      <Link href="/">home</Link>
-      {" | "}
-      <Link href="/notes">notes</Link>
-      {" | "}
-      <Link href="/blogs">blogs</Link>
-      {" | "}
-      <Link href="/users">users</Link>
-      {" | "}
+    <nav className="bg-gray-800 text-white px-6 py-3 flex items-center gap-4">
+      <NavLink href="/">home</NavLink>
 
-      {!session && (
-        <>
-          <Link href="/register">register</Link>
-          {" | "}
-          <Link href="/login">login</Link>
-        </>
-      )}
+      <NavLink href="/notes">notes</NavLink>
 
-      {session && (
-        <>
-          {" | "}
-          <Link href="/notes/new">create new (note)</Link>
-          {" | "}
-          <Link href="/blogs/new">create new (blog post)</Link>
-          {" | "}
-          <b>{session.user?.name}</b> <em>logged in</em>{" "}
+      <NavLink href="/blogs">blogs</NavLink>
 
-          <button onClick={() => signOut()}>logout</button>
-        </>
-      )}
+      <NavLink href="/users">users</NavLink>
+
+      <div className="ml-auto flex items-center gap-4">
+        {session ? (
+          <>
+            <NavLink href="/notes/new">create new (note)</NavLink>
+
+            <NavLink href="/blogs/new">create new (blog post)</NavLink>
+
+            <span className="text-gray-300">
+              <b>{session.user?.name}</b> <em>logged in</em>
+            </span>
+
+            <button
+              onClick={() => signOut()}
+              className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm"
+            >
+              logout
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink href="/login">login</NavLink>
+
+            <NavLink href="/register">register</NavLink>
+          </>
+        )}
+      </div>
     </nav>
   )
 }
