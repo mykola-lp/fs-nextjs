@@ -17,30 +17,40 @@ if (!connectionString) {
 const client = postgres(connectionString);
 const db = drizzle(client);
 
-const initialUsers = [
-  {
-    username: "john123",
-    name: "John Doe",
-    passwordHash: await bcrypt.hash("john123", 10),
-  },
-  {
-    username: "alice456",
-    name: "Alice Smith",
-    passwordHash: await bcrypt.hash("alice456", 10),
-  },
-]
+async function clearDatabase() {
+  console.log("Clearing database...");
+
+  try {
+    await db.delete(notes);
+    await db.delete(blogs);
+    await db.delete(users);
+  } catch (e) {
+    console.log("⚠️ Clear skipped (tables might not exist yet)");
+  }
+
+  console.log("Database cleared");
+}
 
 async function seedUsers(): Promise<number[]> {
-  await db.delete(notes);
-  await db.delete(blogs);
-  await db.delete(users);
+  const initialUsers = [
+    {
+      username: "john123",
+      name: "John Doe",
+      passwordHash: await bcrypt.hash("john123", 10),
+    },
+    {
+      username: "alice456",
+      name: "Alice Smith",
+      passwordHash: await bcrypt.hash("alice456", 10),
+    },
+  ];
 
   const insertedUsers = await db
     .insert(users)
     .values(initialUsers)
     .returning({ id: users.id });
 
-  console.log("Users seeded");
+  console.log("= Users seeded");
 
   return insertedUsers.map((user) => user.id);
 }
@@ -86,7 +96,7 @@ async function seedBlogs(userIds: number[]): Promise<void> {
 
   await db.insert(blogs).values(initialBlogs);
 
-  console.log("Blogs seeded");
+  console.log("= Blogs seeded");
 }
 
 async function seedNotes(userIds: number[]): Promise<void> {
@@ -115,25 +125,27 @@ async function seedNotes(userIds: number[]): Promise<void> {
 
   await db.insert(notes).values(initialNotes);
 
-  console.log("Notes seeded");
+  console.log("= Notes seeded");
 }
 
 async function seed(): Promise<void> {
-  const userIds = await seedUsers();
+  await clearDatabase();
 
+  const userIds = await seedUsers();
   await seedBlogs(userIds);
   await seedNotes(userIds);
 
   await client.end();
 
-  console.log("Seed completed");
+  console.log("✅ Seed completed");
 }
 
 seed().catch(console.error);
 
-// DROP TABLE IF EXISTS drizzle.__drizzle_migrations CASCADE;
 // DROP TABLE IF EXISTS notes CASCADE;
+// DROP TABLE IF EXISTS blogs CASCADE;
 // DROP TABLE IF EXISTS users CASCADE;
+// DROP TABLE IF EXISTS drizzle.__drizzle_migrations CASCADE;
 
 // npx drizzle-kit drop
 
