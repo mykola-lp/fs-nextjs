@@ -99,7 +99,7 @@ Hints:
 
 In case of a validation error, you should return also the previous form values:
 
-```bash
+```ts
 const title = formData.get("title") as string
 const author = formData.get("author") as string
 const url = formData.get("url") as string
@@ -114,7 +114,7 @@ if (Object.keys(errors).length > 0) {
 
 You can use defaultValue in the form to set these values back to the input elements:
 
-```bash
+```tsx
 const [state, formAction] = useActionState(createBlog, initialState)
 
 // ...
@@ -126,3 +126,14 @@ const [state, formAction] = useActionState(createBlog, initialState)
   defaultValue={state.values?.author}
 />
 ```
+
+### Exercise 15: Validations in user registration
+
+Add server-side validation to the registerUser Server Action in the blog app.
+
+Apply the following rules:
+
+* username must be at least 4 characters long
+* password must be at least 4 characters long
+* the form must include a passwordConfirm field, and its value must match password
+* if a user with the given username already exists in the database, return an appropriate error message
