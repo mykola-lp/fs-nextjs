@@ -3,7 +3,7 @@
 import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
 
-import { createUser } from "@/app/services/users"
+import { createUser, getUserByUsername } from "@/app/services/users"
 
 import type { RegisterState } from "./users.types"
 
@@ -16,20 +16,36 @@ export async function registerUser(
   const password = formData.get("password") as string
   const confirmPassword = formData.get("confirmPassword") as string
 
-  if (!username || username.length <= 4) {
-    return { error: "Username must be at least 4 characters long" }
+  if (!username || username.length < 4) {
+    return {
+      error: "Username must be at least 4 characters long",
+    }
   }
 
-  if (!name || name.length <= 4) {
-    return { error: "Name must be at least 4 characters long" }
+  if (!name || name.length < 4) {
+    return {
+      error: "Name must be at least 4 characters long",
+    }
   }
 
-  if (!password || password.length <= 4) {
-    return { error: "Password must be at least 4 characters long" }
+  if (!password || password.length < 4) {
+    return {
+      error: "Password must be at least 4 characters long",
+    }
   }
 
   if (password !== confirmPassword) {
-    return { error: "Passwords do not match" }
+    return {
+      error: "Passwords do not match",
+    }
+  }
+
+  const existingUser = await getUserByUsername(username)
+
+  if (existingUser) {
+    return {
+      error: "Username already exists",
+    }
   }
 
   try {
@@ -42,7 +58,7 @@ export async function registerUser(
     })
   } catch {
     return {
-      error: "Username already exists or registration failed",
+      error: "Registration failed",
     }
   }
 
