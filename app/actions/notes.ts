@@ -1,10 +1,9 @@
 "use server"
 
-import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
-import { addNote, toggleImportance } from "../services/notes"
-import { requireCurrentUser } from "../services/session"
+import { addNote, toggleImportance } from "@/app/services/notes"
+import { requireCurrentUser } from "@/app/services/session"
 
 export const createNote = async (
   prevState: { error: string },

@@ -1,11 +1,9 @@
 "use server"
 
 import bcrypt from "bcryptjs"
-import { redirect } from "next/navigation"
 
 import { createUser, getUserByUsername } from "@/app/services/users"
-
-import type { RegisterState } from "./users.types"
+import type { RegisterState } from "@/app/actions/users.types"
 
 export async function registerUser(
   prevState: RegisterState,

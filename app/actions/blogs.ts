@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { requireCurrentUser } from "@/app/services/session"
 import { addBlog, incrementBlogLikes } from "@/app/services/blogs"
 
-import type { CreateBlogState } from "./blogs.types"
+import type { CreateBlogState } from "@/app/actions/blogs.types"
 
 export const createBlog = async (
   prevState: CreateBlogState,

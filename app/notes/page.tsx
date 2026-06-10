@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { getNotes } from "../services/notes"
+import { getNotes } from "@/app/services/notes"
 
 const Notes = async ({
   searchParams,

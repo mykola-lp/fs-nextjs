@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { getVisibleBlogs } from "../services/blogs"
+import { getVisibleBlogs } from "@/app/services/blogs"
 
 // import BlogList from "./BlogList"
 
