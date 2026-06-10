@@ -34,6 +34,12 @@ export async function registerUser(
     }
   }
 
+  if (!confirmPassword || confirmPassword.length < 4) {
+    return {
+      error: "Confirm Password must be at least 4 characters long",
+    }
+  }
+
   if (password !== confirmPassword) {
     return {
       error: "Passwords do not match",

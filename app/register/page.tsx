@@ -19,28 +19,48 @@ const RegisterPage = () => {
         <div>
           <label>
             Username
-            <input type="text" name="username" required />
+            <input
+              type="text"
+              name="username"
+              required
+              minLength={4}
+            />
           </label>
         </div>
 
         <div>
           <label>
             Name
-            <input type="text" name="name" required />
+            <input
+              type="text"
+              name="name"
+              required
+              minLength={4}
+            />
           </label>
         </div>
 
         <div>
           <label>
             Password
-            <input type="password" name="password" required />
+            <input
+              type="password"
+              name="password"
+              required
+              minLength={4}
+            />
           </label>
         </div>
 
         <div>
           <label>
             Confirm Password
-            <input type="password" name="confirmPassword" required />
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              minLength={4}
+            />
           </label>
         </div>
 
