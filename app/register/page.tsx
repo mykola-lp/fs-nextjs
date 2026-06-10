@@ -37,6 +37,13 @@ const RegisterPage = () => {
           </label>
         </div>
 
+        <div>
+          <label>
+            Confirm Password
+            <input type="password" name="confirmPassword" required />
+          </label>
+        </div>
+
         {state.error ? <p role="alert">{state.error}</p> : null}
 
         <button type="submit" disabled={pending}>
