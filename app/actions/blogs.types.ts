@@ -9,6 +9,9 @@ export type CreateBlogState = {
     author: string
     url: string
   }
+  success?: boolean
 }
 
-export const createBlogInitialState: CreateBlogState = {}
+export const createBlogInitialState: CreateBlogState = {
+  success: false,
+}

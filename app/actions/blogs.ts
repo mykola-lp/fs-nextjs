@@ -1,11 +1,10 @@
 "use server"
 
-import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
-import { addBlog } from "../services/blogs"
-import { incrementBlogLikes } from "../services/blogs"
-import { requireCurrentUser } from "../services/session"
+import { requireCurrentUser } from "@/app/services/session"
+import { addBlog, incrementBlogLikes } from "@/app/services/blogs"
+
 import type { CreateBlogState } from "./blogs.types"
 
 export const createBlog = async (
@@ -34,7 +33,11 @@ export const createBlog = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors, values }
+    return {
+      errors,
+      values,
+      success: false,
+    }
   }
 
   await addBlog(
@@ -45,7 +48,10 @@ export const createBlog = async (
   )
 
   revalidatePath("/blogs")
-  redirect("/blogs")
+
+  return {
+    success: true,
+  }
 }
 
 export const likeBlog = async (formData: FormData) => {
