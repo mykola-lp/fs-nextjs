@@ -3,6 +3,9 @@ import { auth } from "@/auth"
 import AuthSessionProvider from "./components/SessionProvider"
 import NavBar from "./components/NavBar"
 
+import { NotificationProvider } from "./components/NotificationContext"
+import Notification from "./components/Notification"
+
 export default async function RootLayout({
   children,
 }: {
@@ -14,8 +17,11 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <AuthSessionProvider session={session}>
-          <NavBar />
-          {children}
+          <NotificationProvider>
+            <NavBar />
+            <Notification />
+            {children}
+          </NotificationProvider>
         </AuthSessionProvider>
       </body>
     </html>
