@@ -15,7 +15,10 @@ export const createNote = async (
   const content = formData.get("content") as string
 
   if (!content || content.length < 10) {
-    return { error: "Note content must be at least 10 characters long" }
+    return {
+      error: "Note content must be at least 10 characters long",
+      success: false,
+    }
   }
 
   const important = formData.get("important") === "on"
@@ -27,7 +30,8 @@ export const createNote = async (
   )
 
   revalidatePath("/notes")
-  redirect("/notes")
+
+  return { error: "", success: true }
 }
 
 export const toggleNoteImportance = async (formData: FormData) => {
