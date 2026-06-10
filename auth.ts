@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
+import { NextResponse } from "next/server"
 
 import { db } from "@/db"
 import { users } from "@/db/schema"
@@ -53,5 +54,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    authorized({ request, auth }) {
+      const { pathname } = request.nextUrl
+      const isProtectedRoute =
+        pathname.startsWith("/notes/new") || pathname.startsWith("/blogs/new")
+      const isAuthPage =
+        pathname === "/login" || pathname === "/register"
+
+      if (isProtectedRoute && !auth?.user) {
+        const loginUrl = request.nextUrl.clone()
+        loginUrl.pathname = "/login"
+        loginUrl.searchParams.set("callbackUrl", request.nextUrl.href)
+        return NextResponse.redirect(loginUrl)
+      }
+
+      if (isAuthPage && auth?.user) {
+        return NextResponse.redirect(new URL("/", request.url))
+      }
+
+      return true
+    },
   },
 })

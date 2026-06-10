@@ -5,18 +5,14 @@ import { revalidatePath } from "next/cache"
 
 import { addBlog } from "../services/blogs"
 import { incrementBlogLikes } from "../services/blogs"
-import { getCurrentUser } from "../services/session"
+import { requireCurrentUser } from "../services/session"
 import type { CreateBlogState } from "./blogs.types"
 
 export const createBlog = async (
   prevState: CreateBlogState,
   formData: FormData
 ) => {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login")
-  }
+  const user = await requireCurrentUser()
 
   const title = formData.get("title") as string
   const author = formData.get("author") as string
