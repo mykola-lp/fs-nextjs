@@ -19,30 +19,35 @@ export async function registerUser(
   if (!username || username.length < 4) {
     return {
       error: "Username must be at least 4 characters long",
+      success: false,
     }
   }
 
   if (!name || name.length < 4) {
     return {
       error: "Name must be at least 4 characters long",
+      success: false,
     }
   }
 
   if (!password || password.length < 4) {
     return {
       error: "Password must be at least 4 characters long",
+      success: false,
     }
   }
 
   if (!confirmPassword || confirmPassword.length < 4) {
     return {
       error: "Confirm Password must be at least 4 characters long",
+      success: false,
     }
   }
 
   if (password !== confirmPassword) {
     return {
       error: "Passwords do not match",
+      success: false,
     }
   }
 
@@ -51,6 +56,7 @@ export async function registerUser(
   if (existingUser) {
     return {
       error: "Username already exists",
+      success: false,
     }
   }
 
@@ -65,8 +71,12 @@ export async function registerUser(
   } catch {
     return {
       error: "Registration failed",
+      success: false,
     }
   }
 
-  redirect("/login")
+  return {
+    error: "",
+    success: true,
+  }
 }

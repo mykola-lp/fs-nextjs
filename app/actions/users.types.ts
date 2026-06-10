@@ -1,7 +1,9 @@
 export type RegisterState = {
-  error: string | null
+  error: string
+  success: boolean
 }
 
 export const registerInitialState: RegisterState = {
-  error: null,
+  error: "",
+  success: false,
 }
