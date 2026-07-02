@@ -1,8 +1,11 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
+import { auth } from "@/auth"
+
 import bcrypt from "bcryptjs"
 
-import { createUser, getUserByUsername } from "@/app/services/users"
+import { createUser, getUserByUsername, updateUserToken } from "@/app/services/users"
 import type { RegisterState } from "@/app/actions/users.types"
 
 export async function registerUser(
@@ -77,4 +80,21 @@ export async function registerUser(
     error: "",
     success: true,
   }
+}
+
+export async function generateToken() {
+  const session = await auth()
+
+  if (!session?.user?.email) {
+    throw new Error("Unauthorized")
+  }
+
+  const token = crypto.randomUUID()
+
+  await updateUserToken(
+    session.user.email,
+    token,
+  )
+
+  revalidatePath("/me")
 }

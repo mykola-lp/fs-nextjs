@@ -40,3 +40,15 @@ export const createUser = async ({
     passwordHash,
   })
 }
+
+export const updateUserToken = async (
+  username: string,
+  token: string,
+) => {
+  return db
+    .update(users)
+    .set({
+      token,
+    })
+    .where(eq(users.username, username))
+}

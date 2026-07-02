@@ -26,7 +26,10 @@ export default function NavBar() {
             <NavLink href="/blogs/new">create new (blog post)</NavLink>
 
             <span className="text-gray-300">
-              <b>{session.user?.name}</b> <em>logged in</em>
+              <NavLink href="/me">
+                <b>{session.user?.name}</b>
+              </NavLink>{" "}
+              <em>logged in</em>
             </span>
 
             <button
