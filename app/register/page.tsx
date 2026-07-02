@@ -12,7 +12,7 @@ import { registerInitialState } from "@/app/actions/users.types"
 const RegisterPage = () => {
   const [state, formAction, pending] = useActionState(
     registerUser,
-    registerInitialState,
+    registerInitialState
   )
 
   const { showNotification } = useNotification()
@@ -26,65 +26,83 @@ const RegisterPage = () => {
   }, [state.success])
 
   return (
-    <div>
-      <h2>Register</h2>
+    <main className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">
+        Register
+      </h2>
 
-      <form action={formAction}>
+      <form action={formAction} className="space-y-4">
         <div>
-          <label>
+          <label htmlFor="username" className="block mb-1">
             Username
-            <input
-              type="text"
-              name="username"
-              required
-              minLength={4}
-            />
           </label>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            required
+            minLength={4}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
-          <label>
+          <label htmlFor="name" className="block mb-1">
             Name
-            <input
-              type="text"
-              name="name"
-              required
-              minLength={4}
-            />
           </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            required
+            minLength={4}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
-          <label>
+          <label htmlFor="password" className="block mb-1">
             Password
-            <input
-              type="password"
-              name="password"
-              required
-              minLength={4}
-            />
           </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            required
+            minLength={4}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
-          <label>
+          <label htmlFor="confirmPassword" className="block mb-1">
             Confirm Password
-            <input
-              type="password"
-              name="confirmPassword"
-              required
-              minLength={4}
-            />
           </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            required
+            minLength={4}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
-        {state.error ? <p role="alert">{state.error}</p> : null}
+        {state.error && (
+          <p className="text-red-600">
+            {state.error}
+          </p>
+        )}
 
-        <button type="submit" disabled={pending}>
+        <button
+          type="submit"
+          disabled={pending}
+          className="border rounded px-4 py-2 hover:bg-gray-100 disabled:opacity-50"
+        >
           {pending ? "Registering..." : "Register"}
         </button>
       </form>
-    </div>
+    </main>
   )
 }
 
