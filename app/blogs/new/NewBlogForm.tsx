@@ -1,7 +1,6 @@
 "use client"
 
 import { useActionState, useEffect } from "react"
-
 import { useRouter } from "next/navigation"
 
 import { createBlog } from "@/app/actions/blogs"
@@ -26,63 +25,76 @@ const NewBlogForm = () => {
   }, [state.success])
 
   return (
-    <div>
-      <h2>Create a new blog post</h2>
+    <main className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">
+        Create a new blog post
+      </h2>
 
-      <form action={formAction}>
+      <form action={formAction} className="space-y-4">
         <div>
-          <label>
+          <label htmlFor="title" className="block mb-1">
             Title
-            <input
-              id="title"
-              name="title"
-              type="text"
-              defaultValue={state.values?.title}
-              required
-              minLength={5}
-            />
           </label>
+
+          <input
+            id="title"
+            name="title"
+            type="text"
+            defaultValue={state.values?.title}
+            required
+            minLength={5}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
-          <label>
+          <label htmlFor="author" className="block mb-1">
             Author
-            <input
-              id="author"
-              name="author"
-              type="text"
-              defaultValue={state.values?.author}
-              required
-              minLength={5}
-            />
           </label>
+
+          <input
+            id="author"
+            name="author"
+            type="text"
+            defaultValue={state.values?.author}
+            required
+            minLength={5}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
-          <label>
+          <label htmlFor="url" className="block mb-1">
             URL
-            <input
-              id="url"
-              name="url"
-              type="url"
-              defaultValue={state.values?.url}
-              required
-              minLength={5}
-            />
           </label>
+
+          <input
+            id="url"
+            name="url"
+            type="url"
+            defaultValue={state.values?.url}
+            required
+            minLength={5}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
-        <button type="submit">Create</button>
+        <button
+          type="submit"
+          className="border rounded px-4 py-2 hover:bg-gray-100"
+        >
+          Create
+        </button>
       </form>
 
       {state.errors && (
-        <ul style={{ color: "red" }}>
+        <ul className="mt-4 list-disc list-inside text-red-600">
           {state.errors.title && <li>{state.errors.title}</li>}
           {state.errors.author && <li>{state.errors.author}</li>}
           {state.errors.url && <li>{state.errors.url}</li>}
         </ul>
       )}
-    </div>
+    </main>
   )
 }
 

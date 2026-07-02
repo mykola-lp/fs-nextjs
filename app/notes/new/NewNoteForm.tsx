@@ -9,7 +9,7 @@ import { useNotification } from "@/app/components/NotificationContext"
 const NewNoteForm = () => {
   const [state, formAction] = useActionState(createNote, {
     error: "",
-    success: false
+    success: false,
   })
 
   const { showNotification } = useNotification()
@@ -23,29 +23,45 @@ const NewNoteForm = () => {
   }, [state, showNotification, router])
 
   return (
-    <div>
-      <h2>Create a new note</h2>
+    <main className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">
+        Create a new note
+      </h2>
 
-      <form action={formAction}>
+      <form action={formAction} className="space-y-4">
         <div>
-          <label>
+          <label className="block mb-1">
             Content
-            <input type="text" name="content" required minLength={10} />
           </label>
+
+          <input
+            type="text"
+            name="content"
+            required
+            minLength={10}
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
-        <div>
-          <label>
-            <input type="checkbox" name="important" />
-            Important
-          </label>
-        </div>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" name="important" />
+          <span>Important</span>
+        </label>
 
-        <button type="submit">Create</button>
+        <button
+          type="submit"
+          className="border rounded px-4 py-2 hover:bg-gray-100"
+        >
+          Create
+        </button>
       </form>
 
-      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
-    </div>
+      {state.error && (
+        <p className="mt-4 text-red-600">
+          {state.error}
+        </p>
+      )}
+    </main>
   )
 }
 

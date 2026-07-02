@@ -3,7 +3,11 @@ import { notFound } from "next/navigation"
 import { getBlogById } from "@/app/services/blogs"
 import { likeBlog } from "@/app/actions/blogs"
 
-const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+const BlogPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) => {
   const { id } = await params
   const blog = await getBlogById(Number(id))
 
@@ -12,34 +16,46 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div>
-      <h2>{blog.title}</h2>
+    <main className="max-w-2xl mx-auto p-6 space-y-4">
+      <h2 className="text-2xl font-bold">
+        {blog.title}
+      </h2>
 
-      <ul>
+      <ul className="space-y-3">
         <li>
           <strong>Author:</strong> {blog.author}
         </li>
 
         <li>
           <strong>URL:</strong>{" "}
-          <a href={blog.url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={blog.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
             {blog.url}
           </a>
         </li>
-   
-        <li>
-          <strong>Likes:</strong> {blog.likes}
-          
+
+        <li className="flex items-center gap-3">
+          <span>
+            <strong>Likes:</strong> {blog.likes}
+          </span>
+
           <form action={likeBlog}>
             <input type="hidden" name="id" value={blog.id} />
 
-            <button type="submit">
+            <button
+              type="submit"
+              className="border rounded px-3 py-1 hover:bg-gray-100"
+            >
               Like
             </button>
           </form>
         </li>
       </ul>
-    </div>
+    </main>
   )
 }
 
