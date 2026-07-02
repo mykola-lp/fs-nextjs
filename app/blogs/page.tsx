@@ -28,29 +28,47 @@ const Blogs = async (props: PageProps<"/blogs">) => {
   const blogs = await getVisibleBlogs(filterValue, sortOrder)
 
   return (
-    <div>
-      <h2>Blogs</h2>
+    <main className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">
+        Blogs
+      </h2>
 
-      <form action="/blogs">
-        <input type="text" name="filter" defaultValue={filterValue} />
+      <form action="/blogs" className="flex gap-2 mb-4">
+        <input
+          type="text"
+          name="filter"
+          defaultValue={filterValue}
+          className="flex-1 border rounded px-3 py-2"
+        />
 
         <input
           type="hidden"
           name="sort"
           value={sortOrder === "asc" ? "likes-asc" : "likes-desc"}
         />
-      
-        <button type="submit">Search</button>
+
+        <button
+          type="submit"
+          className="border rounded px-4 py-2 hover:bg-gray-100"
+        >
+          Search
+        </button>
       </form>
 
-      <p>
+      <p className="mb-4">
         Sort by likes:{" "}
 
-        <Link href={`/blogs?sort=likes-desc&filter=${encodeURIComponent(filterValue)}`}>
+        <Link
+          href={`/blogs?sort=likes-desc&filter=${encodeURIComponent(filterValue)}`}
+          className="text-blue-600 hover:underline"
+        >
           Most liked first
         </Link>{" "}
         |{" "}
-        <Link href={`/blogs?sort=likes-asc&filter=${encodeURIComponent(filterValue)}`}>
+        <Link
+          href={`/blogs?sort=likes-asc&filter=${encodeURIComponent(filterValue)}`}
+          className="text-blue-600 hover:underline"
+        >
           Least liked first
         </Link>
       </p>
@@ -59,22 +77,37 @@ const Blogs = async (props: PageProps<"/blogs">) => {
       <BlogList blogs={blogs} />
       */}
 
-      <ul>
+      <ul className="space-y-2">
         {blogs.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+          <li
+            key={blog.id}
+            className="border rounded p-3 hover:bg-gray-50"
+          >
+            <Link
+              href={`/blogs/${blog.id}`}
+              className="text-blue-600 hover:underline"
+            >
+              {blog.title}
+            </Link>
 
-            <br />
-            <a href={blog.url} target="_blank" rel="noopener noreferrer">
-              Visit site ↗
-            </a>
+            <p className="mt-2">
+              <a
+                href={blog.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                Visit site ↗
+              </a>
+            </p>
 
-            <br />
-            Likes: {blog.likes}
+            <p className="mt-2">
+              Likes: {blog.likes}
+            </p>
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   )
 }
 
