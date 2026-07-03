@@ -192,3 +192,24 @@ Requirements:
 * return the authenticated user's information as JSON
 * return HTTP `401 Unauthorized` if the token is missing or invalid
 * make the endpoint suitable for external clients such as `curl`, Postman, or other applications
+
+### Exercise 20: Personal reading list
+
+Add support for a personal reading list for each user.
+
+Requirements:
+
+* create a `reading_list` table with the following columns:
+
+  * `id`
+  * `userId` (foreign key to `users`)
+  * `blogId` (foreign key to `blogs`)
+  * `read` (`boolean`, default `false`)
+* automatically add every newly created blog to the author's reading list
+* on each blog page, show an **Add to Reading List** button only for blogs that are **not already** in the logged-in user's reading list
+* allow users to add blogs created by other users to their own reading list
+* display the logged-in user's reading list on the `/me` page
+
+**Note**
+
+As a usability improvement, the **Add to Reading List** button is automatically hidden when the current blog is already present in the logged-in user's reading list. This prevents duplicate additions through the user interface and provides clearer feedback to the user.

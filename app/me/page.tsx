@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { generateToken } from "@/app/actions/users"
 import { getUserByUsername } from "@/app/services/users"
+import { getUserReadingList } from "@/app/services/readingList"
 
 const MePage = async () => {
   const session = await auth()
@@ -16,6 +17,8 @@ const MePage = async () => {
   if (!user) {
     redirect("/login")
   }
+
+  const readingList = await getUserReadingList(user.id)
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -32,6 +35,27 @@ const MePage = async () => {
           <strong>Username:</strong> {user.username}
         </p>
       </div>
+
+      <hr className="my-6" />
+
+      <h3 className="text-xl font-semibold mb-4">
+        Reading List
+      </h3>
+
+      {readingList.length === 0 ? (
+        <p>No blogs in your reading list.</p>
+      ) : (
+        <ul className="space-y-2">
+          {readingList.map((item) => (
+            <li
+              key={item.id}
+              className="border rounded p-3"
+            >
+              {item.blog.title}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <hr className="my-6" />
 
