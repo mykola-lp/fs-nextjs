@@ -300,3 +300,36 @@ Then add these styles to app/globals.css to format headings, paragraphs, lists, 
 ```
 
 This scoped approach ensures the markdown styles only apply inside the .markdown container and do not affect other parts of your application.
+
+### Exercise 23: Finishing touches
+
+For the next exercise implement two API routes to your app:
+
+**HTTP DELETE** `/api/testing/reset`
+
+The HTTP DELETE request to this API should delete all data from all the tables.
+
+**HTTP POST** `/api/testing/users`
+
+The request to this API with the request body
+
+```json
+{
+  "username": "testuser",
+  "name": "Test User",
+  "password": "testpass123"
+}
+```
+
+creates the user directly in the database.
+
+Both of these APIs should not work in production, so the handler functions should start like this:
+
+```ts
+if (process.env.NODE_ENV === "production") {
+  return NextResponse.json(
+    { error: "This endpoint is not available in production" },
+    { status: 403 },
+  )
+}
+```
