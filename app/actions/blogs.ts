@@ -6,6 +6,7 @@ import { requireCurrentUser } from "@/app/services/session"
 import { addBlog, incrementBlogLikes } from "@/app/services/blogs"
 
 import type { CreateBlogState } from "@/app/actions/blogs.types"
+import { createReadingListItem } from "../services/readingList"
 
 export const createBlog = async (
   prevState: CreateBlogState,
@@ -40,11 +41,16 @@ export const createBlog = async (
     }
   }
 
-  await addBlog(
+  const blog = await addBlog(
     title,
     author,
     url,
     user.id
+  )
+
+  await createReadingListItem(
+    user.id,
+    blog.id,
   )
 
   revalidatePath("/blogs")

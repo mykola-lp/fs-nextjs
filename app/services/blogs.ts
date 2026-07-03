@@ -23,12 +23,17 @@ export const addBlog = async (
   url: string,
   userId: number
 ) => {
-  await db.insert(blogs).values({
-    title,
-    author,
-    url,
-    userId,
-  })
+  const [blog] = await db
+    .insert(blogs)
+    .values({
+      title,
+      author,
+      url,
+      userId,
+    })
+    .returning()
+
+  return blog
 }
 
 export const getBlogById = async (
