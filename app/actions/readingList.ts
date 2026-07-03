@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { requireCurrentUser } from "@/app/services/session"
-import { createReadingListItem} from "@/app/services/readingList"
+import { createReadingListItem, markReadingListItemAsRead} from "@/app/services/readingList"
 
 export const addToReadingList = async (formData: FormData) => {
   const currentUser = await requireCurrentUser()
@@ -15,5 +15,22 @@ export const addToReadingList = async (formData: FormData) => {
   )
 
   revalidatePath(`/blogs/${id}`)
+  revalidatePath("/me")
+}
+
+export const markAsRead = async (
+  formData: FormData,
+) => {
+  const user = await requireCurrentUser()
+
+  const blogId = Number(
+    formData.get("blogId"),
+  )
+
+  await markReadingListItemAsRead(
+    user.id,
+    blogId,
+  )
+
   revalidatePath("/me")
 }

@@ -44,3 +44,20 @@ export const isBlogInReadingList = async (
 
   return !!item
 }
+
+export const markReadingListItemAsRead = async (
+  userId: number,
+  blogId: number,
+) => {
+  await db
+    .update(readingList)
+    .set({
+      read: true,
+    })
+    .where(
+      and(
+        eq(readingList.userId, userId),
+        eq(readingList.blogId, blogId),
+      ),
+    )
+}

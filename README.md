@@ -213,3 +213,7 @@ Requirements:
 **Note**
 
 As a usability improvement, the **Add to Reading List** button is automatically hidden when the current blog is already present in the logged-in user's reading list. This prevents duplicate additions through the user interface and provides clearer feedback to the user.
+
+### Exercise 21: Better reading list
+
+Improve the /me page to display the reading list in a more organized way. Group the blogs into two sections: unread and read. Each section should display all the blogs the user has added to their reading list that match that status. Next to each unread blog, show a "mark as read" button.
