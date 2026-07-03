@@ -217,3 +217,86 @@ As a usability improvement, the **Add to Reading List** button is automatically 
 ### Exercise 21: Better reading list
 
 Improve the /me page to display the reading list in a more organized way. Group the blogs into two sections: unread and read. Each section should display all the blogs the user has added to their reading list that match that status. Next to each unread blog, show a "mark as read" button.
+
+### Exercise 22: Static homepage from markdown
+
+Create a static homepage for the app at / that reads its content from a Markdown file.
+
+**Hint:** Next.js has built-in support for MDX, which lets you write JSX directly in Markdown files. Follow the setup guide to install @next/mdx and configure next.config.js. You can then import .mdx files directly as React components in your page.
+
+MDX content renders as plain HTML without any styling, so you will need to add CSS to make it look good. One approach is to wrap the imported component in a container with a custom class and define styles for common markdown elements. Here is an example:
+
+```tsx
+import Homepage from "./homepage.mdx"
+
+const Home = () => {
+  return (
+    <div className="markdown">
+      <Homepage />
+    </div>
+  )
+}
+
+export default Home
+```
+
+Then add these styles to app/globals.css to format headings, paragraphs, lists, and links inside the .markdown container:
+
+```css
+.markdown h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem;
+}
+
+.markdown h2 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin: 2rem 0 0.75rem;
+}
+
+.markdown h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.markdown p {
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+
+.markdown a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.markdown a:hover {
+  color: #2563eb;
+}
+
+.markdown ul {
+  margin: 1rem 0;
+  padding-left: 2rem;
+  line-height: 1.7;
+  list-style-type: disc;
+}
+
+.markdown ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+  line-height: 1.7;
+  list-style-type: decimal;
+}
+
+.markdown li {
+  margin: 0.5rem 0;
+}
+
+.markdown hr {
+  margin: 2rem 0;
+  opacity: 0.2;
+}
+```
+
+This scoped approach ensures the markdown styles only apply inside the .markdown container and do not affect other parts of your application.
