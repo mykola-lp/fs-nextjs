@@ -15,4 +15,5 @@ export const addToReadingList = async (formData: FormData) => {
   )
 
   revalidatePath(`/blogs/${id}`)
+  revalidatePath("/me")
 }
