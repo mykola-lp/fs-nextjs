@@ -1,9 +1,13 @@
 import { redirect } from "next/navigation"
+import Link from "next/link"
 
 import { auth } from "@/auth"
-import { generateToken } from "@/app/actions/users"
+
 import { getUserByUsername } from "@/app/services/users"
 import { getUserReadingList } from "@/app/services/readingList"
+
+import { generateToken } from "@/app/actions/users"
+import { markAsRead } from "@/app/actions/readingList"
 
 const MePage = async () => {
   const session = await auth()
@@ -19,6 +23,14 @@ const MePage = async () => {
   }
 
   const readingList = await getUserReadingList(user.id)
+
+  const unreadBlogs = readingList.filter(
+    (item) => !item.read,
+  )
+
+  const readBlogs = readingList.filter(
+    (item) => item.read,
+  )
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -45,16 +57,80 @@ const MePage = async () => {
       {readingList.length === 0 ? (
         <p>No blogs in your reading list.</p>
       ) : (
-        <ul className="space-y-2">
-          {readingList.map((item) => (
-            <li
-              key={item.id}
-              className="border rounded p-3"
-            >
-              {item.blog.title}
-            </li>
-          ))}
-        </ul>
+        <div className="space-y-8">
+
+          <div>
+            <h4 className="font-semibold mb-3">
+              Unread ({unreadBlogs.length})
+            </h4>
+
+            {unreadBlogs.length === 0 ? (
+              <p className="text-gray-500">
+                No unread blogs.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {unreadBlogs.map((item) => (
+                  <li
+                    key={item.id}
+                    className="border rounded p-3 flex items-center justify-between"
+                  >
+                    <Link
+                      href={`/blogs/${item.blog.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {item.blog.title}
+                    </Link>
+
+                    <form action={markAsRead}>
+                      <input
+                        type="hidden"
+                        name="blogId"
+                        value={item.blog.id}
+                      />
+
+                      <button
+                        type="submit"
+                        className="border rounded px-3 py-1 hover:bg-gray-100"
+                      >
+                        Mark as read
+                      </button>
+                    </form>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-3">
+              Read ({readBlogs.length})
+            </h4>
+
+            {readBlogs.length === 0 ? (
+              <p className="text-gray-500">
+                No read blogs.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {readBlogs.map((item) => (
+                  <li
+                    key={item.id}
+                    className="border rounded p-3"
+                  >
+                    <Link
+                      href={`/blogs/${item.blog.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {item.blog.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+        </div>
       )}
 
       <hr className="my-6" />
