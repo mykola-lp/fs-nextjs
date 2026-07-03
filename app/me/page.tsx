@@ -3,6 +3,8 @@ import Link from "next/link"
 
 import { auth } from "@/auth"
 
+import Profile from "@/app/components/Profile"
+
 import { getUserByUsername } from "@/app/services/users"
 import { getUserReadingList } from "@/app/services/readingList"
 
@@ -38,7 +40,9 @@ const MePage = async () => {
         Profile
       </h2>
 
-      <div className="space-y-2">
+      <Profile />
+
+      <div className="mt-6 space-y-2">
         <p>
           <strong>Name:</strong> {user.name}
         </p>
