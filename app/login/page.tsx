@@ -37,7 +37,10 @@ const LoginPage = () => {
       </h2>
 
       {error && (
-        <p className="mb-4 text-red-600">
+        <p
+          data-testid="error-message"
+          className="mb-4 text-red-600"
+        >
           {error}
         </p>
       )}
@@ -73,6 +76,7 @@ const LoginPage = () => {
 
         <button
           type="submit"
+          data-testid="login-button"
           className="border rounded px-4 py-2 hover:bg-gray-100"
         >
           Login
