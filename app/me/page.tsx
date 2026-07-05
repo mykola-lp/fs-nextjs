@@ -80,46 +80,48 @@ const MePage = async () => {
                 Unread ({unreadBlogs.length})
               </h4>
 
-              {unreadBlogs.length === 0 ? (
-                <p
-                  data-testid="no-unread-blogs"
-                  className="text-gray-500"
-                >
-                  No unread blogs.
-                </p>
-              ) : (
-                <ul className="space-y-2">
-                  {unreadBlogs.map((item) => (
-                    <li
-                      key={item.id}
-                      className="border rounded p-3 flex items-center justify-between"
-                    >
-                      <Link
-                        href={`/blogs/${item.blog.id}`}
-                        className="text-blue-600 hover:underline"
+              <div data-testid="unread-section">
+                {unreadBlogs.length === 0 ? (
+                  <p
+                    data-testid="no-unread-blogs"
+                    className="text-gray-500"
+                  >
+                    No unread blogs.
+                  </p>
+                ) : (
+                  <ul className="space-y-2">
+                    {unreadBlogs.map((item) => (
+                      <li
+                        key={item.id}
+                        className="border rounded p-3 flex items-center justify-between"
                       >
-                        {item.blog.title}
-                      </Link>
-
-                      <form action={markAsRead}>
-                        <input
-                          type="hidden"
-                          name="blogId"
-                          value={item.blog.id}
-                        />
-
-                        <button
-                          type="submit"
-                          data-testid={`mark-read-${item.blog.id}`}
-                          className="border rounded px-3 py-1 hover:bg-gray-100"
+                        <Link
+                          href={`/blogs/${item.blog.id}`}
+                          className="text-blue-600 hover:underline"
                         >
-                          Mark as read
-                        </button>
-                      </form>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                          {item.blog.title}
+                        </Link>
+
+                        <form action={markAsRead}>
+                          <input
+                            type="hidden"
+                            name="blogId"
+                            value={item.blog.id}
+                          />
+
+                          <button
+                            type="submit"
+                            data-testid={`mark-read-${item.blog.id}`}
+                            className="border rounded px-3 py-1 hover:bg-gray-100"
+                          >
+                            Mark as read
+                          </button>
+                        </form>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
 
             <div>
