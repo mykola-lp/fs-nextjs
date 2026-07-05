@@ -81,7 +81,10 @@ const MePage = async () => {
               </h4>
 
               {unreadBlogs.length === 0 ? (
-                <p className="text-gray-500">
+                <p
+                  data-testid="no-unread-blogs"
+                  className="text-gray-500"
+                >
                   No unread blogs.
                 </p>
               ) : (
@@ -107,6 +110,7 @@ const MePage = async () => {
 
                         <button
                           type="submit"
+                          data-testid={`mark-read-${item.blog.id}`}
                           className="border rounded px-3 py-1 hover:bg-gray-100"
                         >
                           Mark as read
@@ -124,7 +128,10 @@ const MePage = async () => {
               </h4>
 
               {readBlogs.length === 0 ? (
-                <p className="text-gray-500">
+                <p
+                  data-testid="no-read-blogs"
+                  className="text-gray-500"
+                >
                   No read blogs.
                 </p>
               ) : (

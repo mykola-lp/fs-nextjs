@@ -96,6 +96,7 @@ const BlogPage = async ({
 
               <button
                 type="submit"
+                data-testid="add-to-reading-list-button"
                 className="border rounded px-3 py-1 hover:bg-gray-100"
               >
                 Add to Reading List
