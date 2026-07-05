@@ -149,38 +149,43 @@ const MePage = async () => {
 
       <hr className="my-6" />
 
-      <h3 className="text-xl font-semibold mb-4">
-        Token API
-      </h3>
+      <div data-testid="api-token-section">
+        <h3 className="text-xl font-semibold mb-4">
+          Token API
+        </h3>
 
-      {user.token ? (
-        <div className="mb-6">
-          <p className="font-medium mb-2">
-            Current token:
-          </p>
+        {user.token ? (
+          <div className="mb-6">
+            <p className="font-medium mb-2">
+              Current token:
+            </p>
 
-          <code
-            data-testid="api-token"
-            className="block border rounded p-3 break-all bg-gray-50"
+            <code
+              data-testid="api-token"
+              className="block border rounded p-3 break-all bg-gray-50"
+            >
+              {user.token}
+            </code>
+          </div>
+        ) : (
+          <p
+            data-testid="no-token-message"
+            className="mb-6 text-gray-600"
           >
-            {user.token}
-          </code>
-        </div>
-      ) : (
-        <p className="mb-6 text-gray-600">
-          No token has been generated yet.
-        </p>
-      )}
+            No token has been generated yet.
+          </p>
+        )}
 
-      <form action={generateToken}>
-        <button
-          type="submit"
-          data-testid="generate-token-button"
-          className="border rounded px-4 py-2 hover:bg-gray-50 cursor-pointer"
-        >
-          Generate token
-        </button>
-      </form>
+        <form action={generateToken}>
+          <button
+            type="submit"
+            data-testid="generate-token-button"
+            className="border rounded px-4 py-2 hover:bg-gray-50 cursor-pointer"
+          >
+            Generate token
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
