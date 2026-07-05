@@ -42,7 +42,10 @@ const MePage = async () => {
 
       <Profile />
 
-      <div className="mt-6 space-y-2">
+      <div
+        data-testid="user-profile"
+        className="mt-6 space-y-2"
+      >
         <p>
           <strong>Name:</strong>{" "}
           <span data-testid="user-name">
