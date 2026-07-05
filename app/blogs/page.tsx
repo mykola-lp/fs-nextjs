@@ -51,6 +51,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
         />
 
         <button
+          data-testid="search-button"
           type="submit"
           className="border rounded px-4 py-2 hover:bg-gray-100"
         >
