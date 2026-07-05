@@ -48,6 +48,16 @@ export const loginUser = async (
   await page.waitForURL("/")
 }
 
+export const logoutUser = async (
+  page: Page,
+) => {
+  await page.getByRole("button", {
+    name: "logout",
+  }).click()
+
+  await page.waitForURL("/")
+}
+
 export const createBlog = async (
   page: Page,
   title: string,

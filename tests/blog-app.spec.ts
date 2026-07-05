@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test"
-import { resetDatabase, createUser, loginUser, createBlog } from "./helpers"
+import { resetDatabase, createUser, loginUser, createBlog, logoutUser } from "./helpers"
 
 test.describe("Blog Application", () => {
   test.beforeEach(async () => {
@@ -395,7 +395,8 @@ test.describe("Blog Application", () => {
       await loginUser(page, "blogowner", "password123")
       await createBlog(page, "First Blog", "Author One", "http://first.com")
       await createBlog(page, "Second Blog", "Author Two", "http://second.com")
-
+      // Logout blogowner
+      await logoutUser(page)
       // Login as testuser and add both blogs to reading list
       await loginUser(page, "testuser", "testpass123")
 
