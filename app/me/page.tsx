@@ -64,84 +64,86 @@ const MePage = async () => {
         Reading List
       </h3>
 
-      {readingList.length === 0 ? (
-        <p>No blogs in your reading list.</p>
-      ) : (
-        <div className="space-y-8">
+      <div data-testid="reading-list-section">
+        {readingList.length === 0 ? (
+          <p>No blogs in your reading list.</p>
+        ) : (
+          <div className="space-y-8">
 
-          <div>
-            <h4 className="font-semibold mb-3">
-              Unread ({unreadBlogs.length})
-            </h4>
+            <div>
+              <h4 className="font-semibold mb-3">
+                Unread ({unreadBlogs.length})
+              </h4>
 
-            {unreadBlogs.length === 0 ? (
-              <p className="text-gray-500">
-                No unread blogs.
-              </p>
-            ) : (
-              <ul className="space-y-2">
-                {unreadBlogs.map((item) => (
-                  <li
-                    key={item.id}
-                    className="border rounded p-3 flex items-center justify-between"
-                  >
-                    <Link
-                      href={`/blogs/${item.blog.id}`}
-                      className="text-blue-600 hover:underline"
+              {unreadBlogs.length === 0 ? (
+                <p className="text-gray-500">
+                  No unread blogs.
+                </p>
+              ) : (
+                <ul className="space-y-2">
+                  {unreadBlogs.map((item) => (
+                    <li
+                      key={item.id}
+                      className="border rounded p-3 flex items-center justify-between"
                     >
-                      {item.blog.title}
-                    </Link>
-
-                    <form action={markAsRead}>
-                      <input
-                        type="hidden"
-                        name="blogId"
-                        value={item.blog.id}
-                      />
-
-                      <button
-                        type="submit"
-                        className="border rounded px-3 py-1 hover:bg-gray-100"
+                      <Link
+                        href={`/blogs/${item.blog.id}`}
+                        className="text-blue-600 hover:underline"
                       >
-                        Mark as read
-                      </button>
-                    </form>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+                        {item.blog.title}
+                      </Link>
 
-          <div>
-            <h4 className="font-semibold mb-3">
-              Read ({readBlogs.length})
-            </h4>
+                      <form action={markAsRead}>
+                        <input
+                          type="hidden"
+                          name="blogId"
+                          value={item.blog.id}
+                        />
 
-            {readBlogs.length === 0 ? (
-              <p className="text-gray-500">
-                No read blogs.
-              </p>
-            ) : (
-              <ul className="space-y-2">
-                {readBlogs.map((item) => (
-                  <li
-                    key={item.id}
-                    className="border rounded p-3"
-                  >
-                    <Link
-                      href={`/blogs/${item.blog.id}`}
-                      className="text-blue-600 hover:underline"
+                        <button
+                          type="submit"
+                          className="border rounded px-3 py-1 hover:bg-gray-100"
+                        >
+                          Mark as read
+                        </button>
+                      </form>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-3">
+                Read ({readBlogs.length})
+              </h4>
+
+              {readBlogs.length === 0 ? (
+                <p className="text-gray-500">
+                  No read blogs.
+                </p>
+              ) : (
+                <ul className="space-y-2">
+                  {readBlogs.map((item) => (
+                    <li
+                      key={item.id}
+                      className="border rounded p-3"
                     >
-                      {item.blog.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+                      <Link
+                        href={`/blogs/${item.blog.id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {item.blog.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       <hr className="my-6" />
 
