@@ -96,6 +96,7 @@ const RegisterPage = () => {
 
         <button
           type="submit"
+          data-testid="register-button"
           disabled={pending}
           className="border rounded px-4 py-2 hover:bg-gray-100 disabled:opacity-50"
         >
