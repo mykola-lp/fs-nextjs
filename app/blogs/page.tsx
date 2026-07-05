@@ -104,7 +104,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
             </p>
 
             <p className="mt-2">
-              Likes: {blog.likes}
+              {blog.likes} likes
             </p>
           </li>
         ))}
