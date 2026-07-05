@@ -155,7 +155,10 @@ const MePage = async () => {
         </h3>
 
         {user.token ? (
-          <div className="mb-6">
+          <div
+            data-testid="token-display"
+            className="mb-6"
+          >
             <p className="font-medium mb-2">
               Current token:
             </p>
