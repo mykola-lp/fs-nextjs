@@ -211,13 +211,10 @@ test.describe("Blog Application", () => {
     })
 
     test("user cannot create blog without being logged in", async ({
-      page,
+      page
     }) => {
       await page.goto("/blogs/new")
-
-      // App currently allows access to the page even when not logged in
-      // Just verify the page loads - you may want to add auth protection later
-      await expect(page).toHaveURL("/blogs/new")
+      await expect(page).toHaveURL(/\/login\?callbackUrl=/)
     })
 
     test("blogs are displayed on blogs page", async ({ page }) => {
