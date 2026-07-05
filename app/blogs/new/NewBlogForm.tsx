@@ -81,6 +81,7 @@ const NewBlogForm = () => {
 
         <button
           type="submit"
+          data-testid="create-blog-button"
           className="border rounded px-4 py-2 hover:bg-gray-100"
         >
           Create

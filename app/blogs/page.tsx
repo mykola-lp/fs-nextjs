@@ -77,7 +77,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
       <BlogList blogs={blogs} />
       */}
 
-      <ul className="space-y-2">
+      <ul data-testid="blogs-list" className="space-y-2">
         {blogs.map((blog) => (
           <li
             key={blog.id}
