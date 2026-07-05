@@ -31,7 +31,9 @@ export default function NavBar() {
             </span>
 
             <button
-              onClick={() => signOut({ callbackUrl: "/" })} // faild: user can login
+              onClick={async () => {
+                await signOut({ redirect: true, callbackUrl: "/" })
+              }}
               className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm"
             >
               logout
