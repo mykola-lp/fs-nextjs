@@ -159,7 +159,10 @@ const MePage = async () => {
             Current token:
           </p>
 
-          <code className="block border rounded p-3 break-all bg-gray-50">
+          <code
+            data-testid="api-token"
+            className="block border rounded p-3 break-all bg-gray-50"
+          >
             {user.token}
           </code>
         </div>
