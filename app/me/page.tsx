@@ -44,11 +44,17 @@ const MePage = async () => {
 
       <div className="mt-6 space-y-2">
         <p>
-          <strong>Name:</strong> {user.name}
+          <strong>Name:</strong>{" "}
+          <span data-testid="user-name">
+            {user.name}
+          </span>
         </p>
 
         <p>
-          <strong>Username:</strong> {user.username}
+          <strong>Username:</strong>{" "}
+          <span data-testid="user-username">
+            {user.username}
+          </span>
         </p>
       </div>
 
