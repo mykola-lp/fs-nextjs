@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:test": "dotenv -e .env.test -- next dev",
     "build": "next build",
     "start": "next start",
+    "db:push": "drizzle-kit push",
+    "db:push:test": "dotenv -e .env.test -- drizzle-kit push",
     "seed": "node --import tsx db/seed.ts",
+    "seed:test": "dotenv -e .env.test -- node --import tsx db/seed.ts",
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
@@ -32,6 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
+    "dotenv-cli": "^11.0.0",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
