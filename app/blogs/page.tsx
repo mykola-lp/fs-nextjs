@@ -37,6 +37,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
 
       <form action="/blogs" className="flex gap-2 mb-4">
         <input
+          data-testid="filter-input"
           type="text"
           name="filter"
           defaultValue={filterValue}
