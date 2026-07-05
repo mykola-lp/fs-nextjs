@@ -30,8 +30,8 @@ jobs:
           cat .env.test | sed 's/=.*/=***/' 
           echo ""
           echo "DATABASE_URL secret exists: ${{ secrets.DATABASE_URL != '' }}"
-          echo "NEXTAUTH_SECRET secret exists: ${{ secrets.NEXTAUTH_SECRET != '' }}"
-          echo "NEXTAUTH_URL secret exists: ${{ secrets.NEXTAUTH_URL != '' }}"
+          echo "AUTH_SECRET secret exists: ${{ secrets.AUTH_SECRET != '' }}"
+          echo "AUTH_URL secret exists: ${{ secrets.AUTH_URL != '' }}"
           echo ""
           echo "Checking if DATABASE_URL is loaded from file:"
           if grep -q "DATABASE_URL=" .env.test; then
@@ -48,8 +48,8 @@ jobs:
       - name: Run Playwright tests
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_URL: ${{ secrets.AUTH_URL }}
         run: npm run test:e2e
 
       - uses: actions/upload-artifact@v4
