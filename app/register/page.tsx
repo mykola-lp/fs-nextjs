@@ -36,12 +36,11 @@ const RegisterPage = () => {
           <label htmlFor="username" className="block mb-1">
             Username
           </label>
+
           <input
             id="username"
             type="text"
             name="username"
-            required
-            minLength={4}
             className="w-full border rounded px-3 py-2"
           />
         </div>
@@ -50,12 +49,11 @@ const RegisterPage = () => {
           <label htmlFor="name" className="block mb-1">
             Name
           </label>
+    
           <input
             id="name"
             type="text"
             name="name"
-            required
-            minLength={4}
             className="w-full border rounded px-3 py-2"
           />
         </div>
@@ -64,12 +62,11 @@ const RegisterPage = () => {
           <label htmlFor="password" className="block mb-1">
             Password
           </label>
+  
           <input
             id="password"
             type="password"
             name="password"
-            required
-            minLength={4}
             className="w-full border rounded px-3 py-2"
           />
         </div>
@@ -78,18 +75,20 @@ const RegisterPage = () => {
           <label htmlFor="confirmPassword" className="block mb-1">
             Confirm Password
           </label>
+  
           <input
             id="confirmPassword"
             type="password"
             name="confirmPassword"
-            required
-            minLength={4}
             className="w-full border rounded px-3 py-2"
           />
         </div>
 
         {state.error && (
-          <p className="text-red-600">
+          <p
+            data-testid={state.errorField ? `${state.errorField}-error` : undefined}
+            className="text-red-600"
+          >
             {state.error}
           </p>
         )}

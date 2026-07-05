@@ -20,6 +20,7 @@ export async function registerUser(
   if (!username || username.length < 4) {
     return {
       error: "Username must be at least 4 characters long",
+      errorField: "username",
       success: false,
     }
   }
@@ -27,6 +28,7 @@ export async function registerUser(
   if (!name || name.length < 4) {
     return {
       error: "Name must be at least 4 characters long",
+      errorField: "name",
       success: false,
     }
   }
@@ -34,6 +36,7 @@ export async function registerUser(
   if (!password || password.length < 4) {
     return {
       error: "Password must be at least 4 characters long",
+      errorField: "password",
       success: false,
     }
   }
@@ -41,6 +44,7 @@ export async function registerUser(
   if (!confirmPassword || confirmPassword.length < 4) {
     return {
       error: "Confirm Password must be at least 4 characters long",
+      errorField: "passwordConfirm",
       success: false,
     }
   }
@@ -48,6 +52,7 @@ export async function registerUser(
   if (password !== confirmPassword) {
     return {
       error: "Passwords do not match",
+      errorField: "passwordConfirm",
       success: false,
     }
   }
@@ -57,6 +62,7 @@ export async function registerUser(
   if (existingUser) {
     return {
       error: "Username already exists",
+      errorField: null,
       success: false,
     }
   }
@@ -72,12 +78,14 @@ export async function registerUser(
   } catch {
     return {
       error: "Registration failed",
+      errorField: null,
       success: false,
     }
   }
 
   return {
     error: "",
+    errorField: null,
     success: true,
   }
 }
