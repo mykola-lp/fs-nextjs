@@ -2,6 +2,8 @@ import Link from "next/link"
 
 import { getVisibleBlogs } from "@/app/services/blogs"
 
+export const revalidate = 0
+
 // import BlogList from "./BlogList"
 
 const getSortOrder = (
