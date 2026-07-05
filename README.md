@@ -338,4 +338,13 @@ if (process.env.NODE_ENV === "production") {
 
 The repository https://github.com/fullstack-hy2020/next-js-tests contains tests for your project. See the README of the repository for info on how to enable the tests for your project.
 
-Ensure that the tests pass when run in GitHub:
+Ensure that the tests pass when run in GitHub.
+
+### 25. Your GitHub repository
+
+In this exercise, you should only tell us what your submission repository is.
+
+Note:
+
+* All the tests added in the previous exercise must pass in your GitHub repository. If tests do not pass, your submission will be rejected.
+* If you are using a private repository, add the GitHub user **mluukkai** as a collaborator. If the repository cannot be accessed, your course will not be graded.
