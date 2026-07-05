@@ -66,7 +66,9 @@ const MePage = async () => {
 
       <div data-testid="reading-list-section">
         {readingList.length === 0 ? (
-          <p>No blogs in your reading list.</p>
+          <p data-testid="empty-reading-list">
+            No blogs in your reading list.
+          </p>
         ) : (
           <div className="space-y-8">
 
