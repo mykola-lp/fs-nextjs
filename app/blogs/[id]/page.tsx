@@ -42,13 +42,19 @@ const BlogPage = async ({
   }
 
   return (
-    <main className="max-w-2xl mx-auto p-6 space-y-4">
-      <h2 className="text-2xl font-bold">
+    <main
+      data-testid="blog-detail"
+      className="max-w-2xl mx-auto p-6 space-y-4"
+    >
+      <h2
+        data-testid="blog-title"
+        className="text-2xl font-bold"
+      >
         {blog.title}
       </h2>
 
       <ul className="space-y-3">
-        <li>
+        <li data-testid="blog-author">
           <strong>Author:</strong> {blog.author}
         </li>
 
