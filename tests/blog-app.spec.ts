@@ -361,7 +361,8 @@ test.describe("Blog Application", () => {
       await createUser("blogowner", "Blog Owner", "password123")
       await loginUser(page, "blogowner", "password123")
       await createBlog(page, "Test Blog", "Test Author", "http://test.com")
-
+      // Logout blogowner
+      await logoutUser(page)
       // Login as testuser and add blog to reading list
       await loginUser(page, "testuser", "testpass123")
       await page.goto("/blogs")
