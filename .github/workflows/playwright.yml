@@ -24,33 +24,27 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Verify environment setup
-        run: |
-          echo "Checking .env.test file:"
-          cat .env.test | sed 's/=.*/=***/' 
-          echo ""
-          echo "DATABASE_URL secret exists: ${{ secrets.DATABASE_URL != '' }}"
-          echo "AUTH_SECRET secret exists: ${{ secrets.AUTH_SECRET != '' }}"
-          echo "AUTH_URL secret exists: ${{ secrets.AUTH_URL != '' }}"
-          echo ""
-          echo "Checking if DATABASE_URL is loaded from file:"
-          if grep -q "DATABASE_URL=" .env.test; then
-            echo "✓ DATABASE_URL found in .env.test"
-          else
-            echo "✗ DATABASE_URL NOT found in .env.test"
-          fi
-
-      - name: Run database migrations
-        run: npm run db:push:test
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      - name: Run Playwright tests
+      - name: Verify environment
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           AUTH_URL: ${{ secrets.AUTH_URL }}
+        run: |
+          [ -n "$DATABASE_URL" ] && echo "✓ DATABASE_URL is set" || (echo "✗ DATABASE_URL is missing" && exit 1)
+          [ -n "$AUTH_SECRET" ] && echo "✓ AUTH_SECRET is set" || (echo "✗ AUTH_SECRET is missing" && exit 1)
+          [ -n "$AUTH_URL" ] && echo "✓ AUTH_URL is set" || (echo "✗ AUTH_URL is missing" && exit 1)
+
+      - name: Run database migrations
+        run: npm run db:push
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run Playwright tests
         run: npm run test:e2e
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_URL: ${{ secrets.AUTH_URL }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
