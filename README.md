@@ -334,13 +334,13 @@ if (process.env.NODE_ENV === "production") {
 }
 ```
 
-### 24. The final check
+### Exercise 24. The final check
 
 The repository https://github.com/fullstack-hy2020/next-js-tests contains tests for your project. See the README of the repository for info on how to enable the tests for your project.
 
 Ensure that the tests pass when run in GitHub.
 
-### 25. Your GitHub repository
+### Exercise 25. Your GitHub repository
 
 In this exercise, you should only tell us what your submission repository is.
 
