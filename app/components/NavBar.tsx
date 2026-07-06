@@ -26,14 +26,14 @@ export default function NavBar() {
             <NavLink href="/blogs/new">create new (blog post)</NavLink>
 
             <span className="text-gray-300">
-              <NavLink href="/me">
-                <b>{session.user?.name}</b>
-              </NavLink>{" "}
+              <NavLink href="/me">me</NavLink>{" "}
               <em>logged in</em>
             </span>
 
             <button
-              onClick={() => signOut()}
+              onClick={async () => {
+                await signOut({ redirect: true, callbackUrl: "/" })
+              }}
               className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm"
             >
               logout

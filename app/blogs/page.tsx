@@ -2,6 +2,8 @@ import Link from "next/link"
 
 import { getVisibleBlogs } from "@/app/services/blogs"
 
+export const revalidate = 0
+
 // import BlogList from "./BlogList"
 
 const getSortOrder = (
@@ -35,6 +37,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
 
       <form action="/blogs" className="flex gap-2 mb-4">
         <input
+          data-testid="filter-input"
           type="text"
           name="filter"
           defaultValue={filterValue}
@@ -48,6 +51,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
         />
 
         <button
+          data-testid="search-button"
           type="submit"
           className="border rounded px-4 py-2 hover:bg-gray-100"
         >
@@ -77,7 +81,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
       <BlogList blogs={blogs} />
       */}
 
-      <ul className="space-y-2">
+      <ul data-testid="blogs-list" className="space-y-2">
         {blogs.map((blog) => (
           <li
             key={blog.id}
@@ -102,7 +106,7 @@ const Blogs = async (props: PageProps<"/blogs">) => {
             </p>
 
             <p className="mt-2">
-              Likes: {blog.likes}
+              {blog.likes} likes
             </p>
           </li>
         ))}

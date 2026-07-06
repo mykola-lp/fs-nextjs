@@ -21,9 +21,9 @@ async function clearDatabase() {
   console.log("Clearing database...");
 
   try {
-    await db.delete(notes);
-    await db.delete(blogs);
-    await db.delete(users);
+  await db.execute(`
+    TRUNCATE TABLE notes, blogs, users RESTART IDENTITY CASCADE;
+  `);
   } catch (e) {
     console.log("⚠️ Clear skipped (tables might not exist yet)");
   }
