@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+---
+
+**Course:** https://courses.mooc.fi/org/uh-cs/courses/full-stack-open-nextjs
+
 ## Getting Started
 
 <b>Clone project:</b>
