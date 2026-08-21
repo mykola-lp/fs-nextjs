@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextJS
 
----
+Exercises exploring **Next.js**: app routing, server and client components, data fetching, and server actions built on top of **React**. Created as part of Full Stack Open, part 14.
 
 **Course:** https://courses.mooc.fi/org/uh-cs/courses/full-stack-open-nextjs
 
